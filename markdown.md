@@ -13,16 +13,17 @@ Many centuries ago… gods ruled the world… the demons were kept at bay… The
 
 The user will face obstacles as they progress throughout the game. Interaction the the environment will be accomplished by entering an action command.
 
-# look
+## ACCEPTABLE COMMANDS
+### look
 User can request a description of the room they are in and any items it contains.
 
-# read
+### read
 User can read documents which may hold information vital the quest.
 
-# take
+### take
 There may be opportunities to acquire items that will aid with obstacles. The take command will store the item for later use.
 
-# drop
+### drop
 User will use command to discard items.
 
 	SCROLLS | ROOMS
