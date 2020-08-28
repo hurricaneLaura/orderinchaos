@@ -13,4 +13,13 @@ public class Game {
       System.out.println(room.getDescription());
     }
   }
+   //TODO: REMOVE ITEM FROM ROOM AND PUT INTO PLAYER INVENTORY. AND VICE-VERCA
+// public void transferItem(String item,Item  addItem,Item removeItem) {
+  // currentRoom.getInventory().contains(item);
+  // player.getInventory().contains(item);
+      // CONSIDER SCOPE AND NULL CHECK
+
+//    fromlist.remove(t);
+//    tolistt.add(t);
+//  }
 }
