@@ -11,6 +11,9 @@ public class Room {
     setDescription(description);
   }
 
+  // BUSINESS METHODS
+  //
+
   // ACCESSOR METHODS
   public String getName() {
     return name;
@@ -33,7 +36,7 @@ public class Room {
   }
 
   public void setCleared(boolean cleared) {
-    isCleared = cleared;
+    this.isCleared = cleared;
   }
 
 
