@@ -70,9 +70,4 @@ public class Util {
 
     return confirmation;
   }
-
-  public static void main(String[] args) {
-    int res = INPUT_HANDLER();
-    System.out.println(res);
-  }
 }
