@@ -7,14 +7,16 @@ import java.util.Objects;
 public class Player {
   // FIELDS
   String name;
-  private List<Item> inventory = new ArrayList<>();
+  private List<String> inventory = new ArrayList<>();
+
 
   public Player(String name) {
+
     this.name = name;
   }
 
   // CONSTRUCTORS
-  public Player(String name, List<Item> inv){
+  public Player(String name, List<String> inv){
     this(name);
     setInventory(inv);
   }
@@ -28,13 +30,32 @@ public class Player {
     this.name = name;
   }
 
-  private List<Item> getInventory() {
-    return inventory;
+  private List<String> getInventory() {
+        return inventory;
   }
 
-  private void setInventory(List<Item> inv) {
+  private void setInventory(List<String> inv) {
     this.inventory = inv;
   }
+  private void addInventory(String item) {
+    inventory.add(item);
+  }
+
+  // BUSINESS METHODS
+  public void takeItem(String item) {
+      addInventory(item);
+      System.out.println(item + " taken!");
+  }
+
+  public String dropItem(String item) {
+    //TODO: CHECK IF PLAYER.INVENTORY CONTAINS ITEM.
+    // IF TRUE, REMOVE THE ITEM FROM PLAYER INVENTORY AND RETURN ITEM.
+    return item;
+    // IF FALSE, RETURN ERROR MESSAGE.
+  }
+
+
+
 
   @Override
   public boolean equals(Object o) {

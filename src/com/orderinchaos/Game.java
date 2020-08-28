@@ -64,4 +64,13 @@ public class Game {
     // if any are successful, change obstacles to cleared
     // repeat for each room
   // present user with a win/loss screen
+   //TODO: REMOVE ITEM FROM ROOM AND PUT INTO PLAYER INVENTORY. AND VICE-VERCA
+// public void transferItem(String item,Item  addItem,Item removeItem) {
+  // currentRoom.getInventory().contains(item);
+  // player.getInventory().contains(item);
+      // CONSIDER SCOPE AND NULL CHECK
+
+//    fromlist.remove(t);
+//    tolistt.add(t);
+//  }
 }
