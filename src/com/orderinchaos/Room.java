@@ -11,6 +11,9 @@ public class Room {
     setDescription(description);
   }
 
+  // BUSINESS METHODS
+  //
+
   // ACCESSOR METHODS
   public String getName() {
     return name;
