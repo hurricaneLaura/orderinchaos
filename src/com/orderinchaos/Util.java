@@ -29,42 +29,25 @@ public class Util {
     return userInput;
   }
 
-  public static final String INPUT_HANDLER(List<String> items) {
-    String confirmation = "";
-    List<String> validInput = Arrays.asList("look", "read", "take", "drop");
-
+  public static final String[] INPUT_HANDLER(List<String> validCommands) {
+    // TODO: change String[] to a KVP collection (hashset maybe)
+    String[] userInput = new String[2];
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
         Scanner wait = new Scanner(System.in);
-        String userInput = wait.nextLine();
-        String[] inputArr = userInput.trim().split(" ",2);
-        String verb = inputArr[0].trim().toLowerCase();
-        String noun = inputArr[1].trim().toLowerCase();
+        String input = wait.nextLine();
+        String[] inputArr = input.trim().split(" ",2);
+        String verb = inputArr[0].trim().toUpperCase();
+        String noun = inputArr[1].trim().toUpperCase();
 
         // DONE: check verb inputArr[0] & noun inputArr[1]
-        if (validInput.contains(verb)) {
-          if (verb.equals("take") || verb.equals("drop")) {
-            if (verb.equals("take") && items.contains(noun)) {
-              confirmation = noun.toUpperCase() + " is added to player's inventory";
-              isValidInput = true;
-            } else if (verb.equals("drop") && items.contains(noun)) {
-              confirmation = noun.toUpperCase() + " is removed from player's inventory";
-              isValidInput = true;
-            } else {
-              System.out.println(noun.toUpperCase() + " is not available...");
-            }
-          } else if (verb.equals("look")) {
-            // TODO: display currentRoom.description
-            confirmation = "display currentRoom.description";
-            isValidInput = true;
-          } else if (verb.equals("read")) {
-            // TODO: create a list of items categorized as "document"
-            confirmation = "display content if item is categorized as \"document\"";
-            isValidInput = true;
-          }
+        if (validCommands.contains(verb)) {
+          isValidInput = true;
+          userInput[0] = verb;
+          userInput[1] = noun;
         } else {
-          System.out.println("I'm not sure what " + userInput + " means...");
+          System.out.println("I'm not sure what " + input + " means...");
         }
       } catch (IndexOutOfBoundsException e) {
         // TODO: display suggestion
@@ -72,7 +55,7 @@ public class Util {
       }
     }
 
-    return confirmation;
+    return userInput;
   }
 
   public static final Stream<String> TEXT_READER(String fileName) {
