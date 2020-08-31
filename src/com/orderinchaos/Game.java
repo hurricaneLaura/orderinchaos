@@ -2,6 +2,10 @@ package com.orderinchaos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+import static com.orderinchaos.Util.*;
 
 public class Game {
   private Room currentRoom;
@@ -13,13 +17,54 @@ public class Game {
 
 
   public void runGame() {
-    // TODO: load start screen (new game, load game, how to play)
-    // TODO: INPUT_HANDLER()
+    mainMenu();
     // TODO: start adventure phase
+  }
+
+  private void mainMenu() {
+    // DONE: load start screen (new game, load game, how to play)
+    int userInput = INPUT_HANDLER();
+    CLEAR_SCREEN();
+    switch (userInput) {
+      case 1: newGame();
+        break;
+      case 2: loadGame();
+        break;
+      case 3: loadHowToPlay();
+        break;
+      // TODO: Asking user input again, possible infinite loop/handled at higher level
+      default:
+        runGame();
+        break;
+    }
+  }
+
+  private void newGame() {
+    intro();
     loadRooms();
     roomEvents(player, roomList);
+  }
 
+  private void intro() {
+    Stream<String> intro = Util.TEXT_READER("intro.txt");
+    STREAM_DISPLAY(intro, 300);
+    Scanner wait = new Scanner(System.in);
+    System.out.print("Press ENTER to continue...");
+    String userInput = wait.nextLine();
+  }
 
+  // TODO: implement load game feature
+  private void loadGame() {
+    System.out.println("Loading...");
+  }
+
+  // TODO: display how to play guide
+  private void loadHowToPlay() {
+    Stream<String> instruction = Util.TEXT_READER("instruction.txt");
+    STREAM_DISPLAY(instruction, 0);
+    Scanner wait = new Scanner(System.in);
+    System.out.print("Press ENTER to go back...");
+    String userInput = wait.nextLine();
   }
 
   public void roomEvents(Player player, List<Room> roomList) {
