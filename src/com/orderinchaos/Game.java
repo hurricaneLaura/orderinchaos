@@ -1,8 +1,6 @@
 package com.orderinchaos;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.orderinchaos.Util.*;
@@ -69,6 +67,9 @@ public class Game {
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
       System.out.println(room.getDescription());
+      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
+      String[] userInput = INPUT_HANDLER(validInput);
+      actionDelegator(userInput, room, player);
       changePhase(room, player);
 
     }
@@ -83,11 +84,45 @@ public class Game {
   }
 
   public void loadRooms() {
-    roomList.add(new Room("Western Mountains", "You’re standing and the edge of a mountain, looking out to the jagged rocks below. you know your mission, you turn around and head to the a small building in the distance."));
-    roomList.add(new Room("The Edge of Nowhere", "You stand at the edge of a shallow are in a cluster of roofless,homes, apparently part of small . Abandoned items litter the ground suggesting the residents left in a hurry. An ominous feeling suddenly suddenly hits you."));
-
+    Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
+    descriptions.forEach(line -> {
+      String[] tempArray = line.split("[|]");
+      roomList.add(new Room(tempArray[0], tempArray[1]));
+    });
   }
 
+  public List<Room> getRoomList(){
+    return Collections.unmodifiableList(roomList);
+  }
+
+  public void actionDelegator(String[] userInput, Room room, Player player) {
+    switch (userInput[0]) {
+      case "TAKE":
+        // Delete from room inv and add to player inv
+        swapItems(userInput[1],room.getInventory(), player.getInventory());
+        break;
+      case "DROP":
+        // Delete from player inv and add to room inv
+        swapItems(userInput[1],player.getInventory(), room.getInventory());
+        break;
+      case "LOOK":
+        // TODO: implement look and read methods
+        System.out.println("Looks good");
+        break;
+      case "READ":
+        System.out.println("Maybe I'll read later...");
+        break;
+      default:
+        break;
+    }
+  }
+
+    public void swapItems(String item, Inventory fromInv, Inventory toInv) {
+      fromInv.removeItem(item);
+      toInv.addItem(item);
+    }
+
+}
 
 
 
@@ -117,5 +152,5 @@ public class Game {
 //    fromlist.remove(t);
 //    tolistt.add(t);
 //  }
-}
+
 

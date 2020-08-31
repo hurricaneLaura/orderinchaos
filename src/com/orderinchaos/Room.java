@@ -1,9 +1,17 @@
 package com.orderinchaos;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+import static com.orderinchaos.Util.*;
+
 public class Room {
   private String name;
   private String description;
   private boolean isCleared = false;
+  private Inventory inventory = new Inventory();
 
   // CTOR
   public Room(String name, String description) {
@@ -12,7 +20,6 @@ public class Room {
   }
 
   // BUSINESS METHODS
-  //
 
   // ACCESSOR METHODS
   public String getName() {
@@ -31,12 +38,22 @@ public class Room {
     this.description = description;
   }
 
+
   public boolean isCleared() {
     return isCleared;
   }
 
+  // A room is considered clear when all items have been taken, no enemies exist, no puzzles are left to solve
   public void setCleared(boolean cleared) {
-    this.isCleared = cleared;
+    if (inventory.getInventory().size() != 0) {
+      this.isCleared = false;
+    } else {
+      this.isCleared = true;
+    }
+  }
+
+  public Inventory getInventory() {
+    return inventory;
   }
 
 

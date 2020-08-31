@@ -31,6 +31,10 @@ public class Player {
     this.name = name;
   }
 
+  public Inventory getInventory(){
+    return inventory;
+  }
+
   // BUSINESS METHODS
 
 
