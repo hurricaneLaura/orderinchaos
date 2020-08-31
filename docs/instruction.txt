@@ -1,0 +1,28 @@
+*** INTERACTION ***
+
+The user will face obstacles as they progress throughout the game.
+Interaction the the environment will be accomplished by entering an action command.
+
+*** ACCEPTABLE COMMANDS ***
+
+[LOOK AROUND]
+User can request a description of the room they are in and any items it contains.
+
+[READ XXX]
+User can read documents which may hold information vital the quest.
+
+[TAKE XXX]
+There may be opportunities to acquire items that will aid with obstacles. The take command will store the item for later use.
+
+[DROP XXX]
+User will use DROP command to discard item(s).
+
+	      SCROLLS  |  ROOMS
+----------------   |  ------------------
+Scroll of Creation | Monastery
+Scroll of infinity | western mountains
+
+
+## SUCCESSFUL GAME COMPLETION
+
+The game is complete if the user successfully gathers the scroll and delivers them to the right-ful owner.

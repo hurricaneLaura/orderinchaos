@@ -1,6 +1,10 @@
 package com.orderinchaos;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Util {
   public static final int INPUT_HANDLER() {
@@ -69,5 +73,43 @@ public class Util {
     }
 
     return confirmation;
+  }
+
+  public static final Stream<String> TEXT_READER(String fileName) {
+    Stream<String> result = null;
+    try {
+      result = Files.lines(Paths.get("docs",fileName));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return result;
+  }
+
+  public static final void STREAM_DISPLAY(Stream<String> stream, int duration) {
+    stream.forEach(line -> {
+      System.out.println(line);
+      try {
+        Thread.sleep(duration);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    System.out.print("\n");
+  }
+
+  public static final void CLEAR_SCREEN() {
+    try {
+      final String os = System.getProperty("os.name");
+      if (os.contains("Windows")) {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+      } else {
+        new ProcessBuilder("clear").inheritIO().start().waitFor();
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
