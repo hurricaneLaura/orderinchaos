@@ -10,8 +10,7 @@ import static com.orderinchaos.Util.*;
 public class Game {
   private Room currentRoom;
   private List<Room> roomList = new ArrayList<>();
-  private List<String> inventory = new ArrayList<>();
-  private Player player = new Player("The Chosen One", inventory);
+   private Player player = new Player("The Chosen One");
 
   // Load roomList
 

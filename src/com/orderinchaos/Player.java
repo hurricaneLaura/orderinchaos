@@ -7,16 +7,19 @@ import java.util.Objects;
 public class Player {
   // FIELDS AKA ATTRIBUTES
   String name;
-  private List<String> inventory = new ArrayList<>();
+  private Inventory inventory = new Inventory();
+
+//  public void test() {
+//    inventory.dropItem("elixer");
+//  }
+//  Player player1 = new Player();
+//  player1.test();
+//  player1.inventory.dropItem("sword");
+//  player1.inventory.dropItem("food");
 
   // CONSTRUCTORS
   public Player(String name) {
-    this.name = name;
-  }
-
-  public Player(String name, List<String> inv) {
-    this(name);
-    setInventory(inv);
+    setName(name);
   }
 
   // GETTERS/ SETTERS
@@ -28,38 +31,10 @@ public class Player {
     this.name = name;
   }
 
-  private List<String> getInventory() {
-    return inventory;
-  }
-
-  private void setInventory(List<String> inv) {
-    this.inventory = inv;
-  }
-
   // BUSINESS METHODS
-  public void takeItem(Room room, String item) {
-      inventory.add(item);
-      System.out.println(item + " taken!");
-    }
 
-  public void dropItem(String item) {
-    // DONE: CHECK IF PLAYER.INVENTORY CONTAINS ITEM.
-    if (inventory.contains(item)) {
-      inventory.remove(item);
-    } else {
-      System.out.println("That item is not in your inventory");
-    }
-  }
 
-  public String showInventory(ArrayList<String> inventory) {
-    if (inventory != null && inventory.isEmpty()) {
-      System.out.println("There are 0 items in your inventory" + "\n");
-      System.out.println("Explore items and enter 'take' to store in inventory");
-    } else {
-      System.out.println(inventory);
-      }
-    return null;
-  }
+
 
   @Override
   public boolean equals(Object o) {
