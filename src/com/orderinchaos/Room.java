@@ -1,6 +1,7 @@
 package com.orderinchaos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -9,7 +10,7 @@ import static com.orderinchaos.Util.*;
 
 public class Room {
   private String name;
-  private String description;
+  private List<String> description = new ArrayList<>();
   private boolean isCleared = false;
   private Inventory inventory = new Inventory();
 
@@ -30,12 +31,15 @@ public class Room {
     this.name = name;
   }
 
-  public String getDescription() {
+  public List<String> getDescription() {
     return description;
   }
 
   public void setDescription(String description) {
-    this.description = description;
+    String[] lines = description.split("[.]");
+    for (String line : lines) {
+      this.description.add(line.trim().concat("."));
+    }
   }
 
 

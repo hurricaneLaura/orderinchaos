@@ -35,6 +35,7 @@ public class Util {
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
+        System.out.print("\t>>> ");
         Scanner wait = new Scanner(System.in);
         String input = wait.nextLine();
         String[] inputArr = input.trim().split(" ",2);
