@@ -1,12 +1,5 @@
 package com.orderinchaos;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Stream;
-
-import static com.orderinchaos.Util.*;
-
 public class Room {
   private String name;
   private String description;
@@ -46,7 +39,7 @@ public class Room {
 
   // A room is considered clear when all items have been taken, no enemies exist, no puzzles are left to solve
   public void setCleared() {
-    if (inventory.getInventory().size() != 0) {
+    if (inventory.getItems().size() != 0) {
       this.isCleared = false;
     } else {
       this.isCleared = true;

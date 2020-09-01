@@ -13,12 +13,9 @@ public class Inventory {
   // TODO: set inventory create accessor methods
   public Inventory(List<String> inventory) {
     setInventory(inventory);
-    inventory.add("manuscript");
-    inventory.add("scull");
-    inventory.add("key");
   }
 
-  public List<String> getInventory() {
+  public List<String> getItems() {
     return inventory;
   }
 
@@ -37,7 +34,7 @@ public class Inventory {
 
   // TODO: use getInventory instead of directly accessing inventory
   public void showInventory() {
-    List<String> currentInv = getInventory();
+    List<String> currentInv = getItems();
     if (currentInv != null && currentInv.isEmpty()) {
       System.out.println("There are 0 items in your inventory");
       System.out.println("Explore items and enter 'take' to store in inventory");

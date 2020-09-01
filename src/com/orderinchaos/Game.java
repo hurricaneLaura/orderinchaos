@@ -126,7 +126,7 @@ public class Game {
   }
 
     public boolean swapItems(String item, Inventory fromInv, Inventory toInv) {
-      if (fromInv.getInventory().contains(item)) {
+      if (fromInv.getItems().contains(item)) {
         fromInv.removeItem(item);
         toInv.addItem(item);
         return true;
