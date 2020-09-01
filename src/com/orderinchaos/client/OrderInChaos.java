@@ -1,4 +1,4 @@
-package com.orderinchaos;
+package com.orderinchaos.client;
 
 import com.orderinchaos.Game;
 import com.orderinchaos.Player;
