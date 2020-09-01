@@ -66,9 +66,8 @@ public class Game {
 
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
-      System.out.println(room.getDescription());
+      STREAM_DISPLAY(room.getDescription().stream(), 0);
       changePhase(room, player);
-
     }
   }
 
@@ -134,7 +133,6 @@ public class Game {
         return false;
       }
     }
-
 }
 
 
