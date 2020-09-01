@@ -1,5 +1,5 @@
-Monestary|You stand at the edge of a shallow are in a cluster of roofless,homes, apparently part of small. Abandoned items litter the ground suggesting the residents left in a hurry. An ominous feeling suddenly suddenly hits you.
-Western Mountains|You’re standing and the edge of a mountain, looking out to the jagged rocks below. you know your mission, you turn around and head to the a small building in the distance.
-The Piraeus|A melody sound and salty smell wafted from an harbour filled with docked ships. The small town of Piraeus stood adjacent to the ocean with a road cutting between.
-Library of Knowledge|A richly ornamented library, flooded with light, and seemingly endless
-Edge of Nowhere|An edgey description
+Monestary|You stand at the edge of a shallow are in a cluster of roofless,homes, apparently part of small. Abandoned items litter the ground suggesting the residents left in a hurry. An ominous feeling suddenly suddenly hits you.|SCROLL
+Western Mountains|You’re standing and the edge of a mountain, looking out to the jagged rocks below. you know your mission, you turn around and head to the a small building in the distance.|SCROLL
+The Piraeus|A melody sound and salty smell wafted from an harbour filled with docked ships. The small town of Piraeus stood adjacent to the ocean with a road cutting between.|SCROLL
+Library of Knowledge|A richly ornamented library, flooded with light, and seemingly endless|SCROLL
+Edge of Nowhere|An edgey description|SCROLL

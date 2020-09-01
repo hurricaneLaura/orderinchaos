@@ -67,9 +67,6 @@ public class Game {
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
       System.out.println(room.getDescription());
-      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
-      String[] userInput = INPUT_HANDLER(validInput);
-      actionDelegator(userInput, room, player);
       changePhase(room, player);
 
     }
@@ -77,8 +74,11 @@ public class Game {
 
   public Player changePhase(Room room, Player player) {
     while (room.isCleared() != true) {
-      // TODO: Check each obstacle in the room - if all are cleared, setCleared(true)
-      room.setCleared(true);
+      // TODO: look into putting these commands into a text file, their own class, or a higher scope
+      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
+      String[] userInput = INPUT_HANDLER(validInput);
+      actionDelegator(userInput, room, player);
+      room.setCleared();
     }
     return player;
   }
@@ -87,7 +87,7 @@ public class Game {
     Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
     descriptions.forEach(line -> {
       String[] tempArray = line.split("[|]");
-      roomList.add(new Room(tempArray[0], tempArray[1]));
+      roomList.add(new Room(tempArray[0], tempArray[1], tempArray[2]));
     });
   }
 
@@ -99,11 +99,19 @@ public class Game {
     switch (userInput[0]) {
       case "TAKE":
         // Delete from room inv and add to player inv
-        swapItems(userInput[1],room.getInventory(), player.getInventory());
+        if (swapItems(userInput[1],room.getInventory(), player.getInventory())) {
+          System.out.println(userInput[1] + " taken!");
+        } else {
+          System.out.println("There aren't any to take!");
+        }
         break;
       case "DROP":
         // Delete from player inv and add to room inv
-        swapItems(userInput[1],player.getInventory(), room.getInventory());
+        if (swapItems(userInput[1],player.getInventory(), room.getInventory())) {
+          System.out.println(userInput[1] + " dropped!");
+        } else {
+          System.out.println("You don't have any to drop.");
+        }
         break;
       case "LOOK":
         // TODO: implement look and read methods
@@ -117,9 +125,14 @@ public class Game {
     }
   }
 
-    public void swapItems(String item, Inventory fromInv, Inventory toInv) {
-      fromInv.removeItem(item);
-      toInv.addItem(item);
+    public boolean swapItems(String item, Inventory fromInv, Inventory toInv) {
+      if (fromInv.getItems().contains(item)) {
+        fromInv.removeItem(item);
+        toInv.addItem(item);
+        return true;
+      } else {
+        return false;
+      }
     }
 
 }
