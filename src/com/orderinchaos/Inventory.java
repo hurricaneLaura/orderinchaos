@@ -28,16 +28,11 @@ public class Inventory {
 
   public void addItem(String item) {
     inventory.add(item);
-    System.out.println(item + " taken!");
   }
 
   public void removeItem(String item) {
     // DONE: CHECK IF INVENTORY CONTAINS ITEM.
-    if (inventory.contains(item)) {
       inventory.remove(item);
-    } else {
-      System.out.println("That item is not in your inventory");
-    }
   }
 
   // TODO: use getInventory instead of directly accessing inventory
@@ -51,5 +46,12 @@ public class Inventory {
         System.out.println(item);
       }
     }
+  }
+
+  @Override
+  public String toString() {
+    return "Inventory{" +
+            "inventory=" + inventory +
+            '}';
   }
 }
