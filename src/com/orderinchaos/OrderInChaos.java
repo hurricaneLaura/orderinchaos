@@ -1,4 +1,4 @@
-package com.orderinchaos.client;
+package com.orderinchaos;
 
 import com.orderinchaos.Game;
 import com.orderinchaos.Player;
@@ -7,5 +7,5 @@ public class OrderInChaos {
   public static void main(String[] args) {
     Game game = new Game();
     game.runGame();
-  }
+      }
 }

@@ -1,5 +1,8 @@
 package com.orderinchaos;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +13,7 @@ import static com.orderinchaos.Util.*;
 public class Game {
   private Room currentRoom;
   private List<Room> roomList = new ArrayList<>();
-   private Player player = new Player("The Chosen One");
+  private Player player = new Player("The Chosen One");
 
   // Load roomList
 
@@ -22,14 +25,18 @@ public class Game {
 
   private void mainMenu() {
     // DONE: load start screen (new game, load game, how to play)
+    printBanner();
     int userInput = INPUT_HANDLER();
     CLEAR_SCREEN();
     switch (userInput) {
-      case 1: newGame();
+      case 1:
+        newGame();
         break;
-      case 2: loadGame();
+      case 2:
+        loadGame();
         break;
-      case 3: loadHowToPlay();
+      case 3:
+        loadHowToPlay();
         break;
       // TODO: Asking user input again, possible infinite loop/handled at higher level
       default:
@@ -72,6 +79,7 @@ public class Game {
       changePhase(room, player);
 
     }
+    end();
   }
 
   public Player changePhase(Room room, Player player) {
@@ -88,7 +96,28 @@ public class Game {
 
   }
 
+  public void printBanner() {
+   Util.STREAM_DISPLAY(Util.TEXT_READER("banner.txt"), 300);
+  }
 
+
+  // TODO: validate user input
+  public void end() {
+    Scanner endSc = new Scanner(System.in);
+    System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
+    System.out.println("\n" + "What would you like to do?" + ">play again" + "\n" + ">quit");
+    String Question = endSc.nextLine();
+    if (Question.toLowerCase().contains("quit")) {
+      System.exit(0);
+    } else {
+      if (Question.toLowerCase().contains("play again")) {
+        newGame();
+      } else {
+        System.out.println("You have failed us all, try again later");
+      }
+    }
+  }
+}
 
 
 
@@ -117,5 +146,5 @@ public class Game {
 //    fromlist.remove(t);
 //    tolistt.add(t);
 //  }
-}
+
 
