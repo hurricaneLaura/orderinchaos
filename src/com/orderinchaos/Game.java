@@ -1,11 +1,6 @@
 package com.orderinchaos;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.orderinchaos.Util.*;
@@ -75,31 +70,78 @@ public class Game {
 
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
-      System.out.println(room.getDescription());
+      STREAM_DISPLAY(room.getDescription().stream(), 0);
       changePhase(room, player);
-
     }
     end();
   }
 
   public Player changePhase(Room room, Player player) {
     while (room.isCleared() != true) {
-      // TODO: Check each obstacle in the room - if all are cleared, setCleared(true)
-      room.setCleared(true);
+      // TODO: look into putting these commands into a text file, their own class, or a higher scope
+      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
+      String[] userInput = INPUT_HANDLER(validInput);
+      actionDelegator(userInput, room, player);
+      room.setCleared();
     }
     return player;
   }
 
   public void loadRooms() {
-    roomList.add(new Room("Western Mountains", "You’re standing and the edge of a mountain, looking out to the jagged rocks below. you know your mission, you turn around and head to the a small building in the distance."));
-    roomList.add(new Room("The Edge of Nowhere", "You stand at the edge of a shallow are in a cluster of roofless,homes, apparently part of small . Abandoned items litter the ground suggesting the residents left in a hurry. An ominous feeling suddenly suddenly hits you."));
+    Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
+    descriptions.forEach(line -> {
+      String[] tempArray = line.split("[|]");
+      roomList.add(new Room(tempArray[0], tempArray[1], tempArray[2]));
+    });
+  }
 
+  public List<Room> getRoomList(){
+    return Collections.unmodifiableList(roomList);
   }
 
   public void printBanner() {
-   Util.STREAM_DISPLAY(Util.TEXT_READER("banner.txt"), 300);
+    Util.STREAM_DISPLAY(Util.TEXT_READER("banner.txt"), 300);
   }
 
+  public void actionDelegator(String[] userInput, Room room, Player player) {
+    switch (userInput[0]) {
+      case "TAKE":
+        // Delete from room inv and add to player inv
+        if (swapItems(userInput[1],room.getInventory(), player.getInventory())) {
+          System.out.println(userInput[1] + " taken!");
+        } else {
+          System.out.println("There aren't any to take!");
+        }
+        break;
+      case "DROP":
+        // Delete from player inv and add to room inv
+        if (swapItems(userInput[1],player.getInventory(), room.getInventory())) {
+          System.out.println(userInput[1] + " dropped!");
+        } else {
+          System.out.println("You don't have any to drop.");
+        }
+        break;
+      case "LOOK":
+        // TODO: implement look and read methods
+        System.out.println("Looks good");
+        break;
+      case "READ":
+        System.out.println("Maybe I'll read later...");
+        break;
+      default:
+        break;
+    }
+  }
+
+    public boolean swapItems(String item, Inventory fromInv, Inventory toInv) {
+      if (fromInv.getItems().contains(item)) {
+        fromInv.removeItem(item);
+        toInv.addItem(item);
+        return true;
+      } else {
+        return false;
+      }
+    }
 
   // TODO: validate user input
   public void end() {

@@ -9,14 +9,6 @@ public class Player {
   String name;
   private Inventory inventory = new Inventory();
 
-//  public void test() {
-//    inventory.dropItem("elixer");
-//  }
-//  Player player1 = new Player();
-//  player1.test();
-//  player1.inventory.dropItem("sword");
-//  player1.inventory.dropItem("food");
-
   // CONSTRUCTORS
   public Player(String name) {
     setName(name);
@@ -30,13 +22,8 @@ public class Player {
   public void setName(String name) {
     this.name = name;
   }
-
-  public Inventory getInventory() {
+  public Inventory getInventory(){
     return inventory;
-  }
-
-  public void setInventory(Inventory inventory) {
-    this.inventory = inventory;
   }
 
   // BUSINESS METHODS

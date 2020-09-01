@@ -1,26 +1,22 @@
 package com.orderinchaos;
 
-import java.io.IOException;
-import java.nio.CharBuffer;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.orderinchaos.Util.*;
 
 public class Room {
   private String name;
-  private String description;
+  private List<String> description = new ArrayList<>();
   private boolean isCleared = false;
   private Inventory readItems = new Inventory();
+  private Inventory inventory = new Inventory();
 
-
-  // CONSTRUCTOR
-  public Room(String name, String description) {
+  // CTOR
+  public Room(String name, String description, String item) {
     setName(name);
     setDescription(description);
-  }
-
-  public Room(String name, String description, Inventory readItems) {
-    this.name = name;
-    this.description = description;
-    this.readItems = readItems;
+    getInventory().addItem(item);
   }
 
   // ACCESSOR METHODS
@@ -32,20 +28,29 @@ public class Room {
     this.name = name;
   }
 
-  public String getDescription() {
+  public List<String> getDescription() {
     return description;
   }
 
   public void setDescription(String description) {
-    this.description = description;
+    String[] lines = description.split("[.]");
+    for (String line : lines) {
+      this.description.add(line.trim().concat("."));
+    }
   }
+
 
   public boolean isCleared() {
     return isCleared;
   }
 
-  public void setCleared(boolean cleared) {
-    this.isCleared = cleared;
+  // A room is considered clear when all items have been taken, no enemies exist, no puzzles are left to solve
+  public void setCleared() {
+    if (inventory.getItems().size() != 0) {
+      this.isCleared = false;
+    } else {
+      this.isCleared = true;
+    }
   }
 
   public Inventory getReadItems() {
@@ -57,5 +62,8 @@ public class Room {
   }
 
   public void loadReadItems() {
+  }
+  public Inventory getInventory() {
+    return inventory;
   }
 }
