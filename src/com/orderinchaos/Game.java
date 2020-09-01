@@ -67,9 +67,6 @@ public class Game {
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
       STREAM_DISPLAY(room.getDescription().stream(), 0);
-      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
-      String[] userInput = INPUT_HANDLER(validInput);
-      actionDelegator(userInput, room, player);
       changePhase(room, player);
     }
   }
