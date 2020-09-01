@@ -79,10 +79,9 @@ public class GameTest {
 
     }
 
-    @Test
     //TODO: write delegator souts to return strings and store in a variable before printing so we can test
-//    @Test
-//    public void moar_Tests_thatRelyOnGameClass_beingInstantiated(){
-//
-//    }
+    @Test
+    public void moar_Tests_thatRelyOnGameClass_beingInstantiated(){
+
+    }
 }
