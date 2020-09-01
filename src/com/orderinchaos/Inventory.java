@@ -6,6 +6,7 @@ import java.util.List;
 public class Inventory {
   private List<String> inventory = new ArrayList<>();
 
+  // CONSTRUCTORS
   public Inventory () {
 
   }

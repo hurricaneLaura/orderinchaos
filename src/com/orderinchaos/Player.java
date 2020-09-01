@@ -9,36 +9,35 @@ public class Player {
   String name;
   private Inventory inventory = new Inventory();
 
-//  public void test() {
-//    inventory.dropItem("elixer");
-//  }
-//  Player player1 = new Player();
-//  player1.test();
-//  player1.inventory.dropItem("sword");
-//  player1.inventory.dropItem("food");
-
   // CONSTRUCTORS
   public Player(String name) {
     setName(name);
   }
 
   // GETTERS/ SETTERS
-  private String getName() {
+  public String getName() {
     return name;
   }
 
-  private void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
-
   public Inventory getInventory(){
     return inventory;
   }
 
   // BUSINESS METHODS
 
+  // READ ITEMS IN ROOM
+  public void read() {
+//    if (readItems != null) {
 
 
+    // null check readItem list
+    // according to user input print
+    // print text
+    // }
+  }
 
   @Override
   public boolean equals(Object o) {

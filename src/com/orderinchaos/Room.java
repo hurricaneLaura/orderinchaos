@@ -9,6 +9,7 @@ public class Room {
   private String name;
   private List<String> description = new ArrayList<>();
   private boolean isCleared = false;
+  private Inventory readItems = new Inventory();
   private Inventory inventory = new Inventory();
 
   // CTOR
@@ -17,8 +18,6 @@ public class Room {
     setDescription(description);
     getInventory().addItem(item);
   }
-
-  // BUSINESS METHODS
 
   // ACCESSOR METHODS
   public String getName() {
@@ -54,6 +53,16 @@ public class Room {
     }
   }
 
+  public Inventory getReadItems() {
+    return readItems;
+  }
+
+  public void setReadItems(Inventory readItems) {
+    this.readItems = readItems;
+  }
+
+  public void loadReadItems() {
+  }
   public Inventory getInventory() {
     return inventory;
   }
