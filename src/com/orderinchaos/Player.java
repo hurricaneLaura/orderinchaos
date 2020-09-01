@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Player {
   // FIELDS AKA ATTRIBUTES
-  String name;
+  private String name;
   private Inventory inventory = new Inventory();
 
   // CONSTRUCTORS
