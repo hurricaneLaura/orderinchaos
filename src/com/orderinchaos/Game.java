@@ -91,8 +91,18 @@ public class Game {
     Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
     descriptions.forEach(line -> {
       String[] tempArray = line.split("[|]");
-      roomList.add(new Room(tempArray[0], tempArray[1], tempArray[2]));
+      roomList.add(new Room(tempArray[0], tempArray[1]));
     });
+    for (Room room : roomList) {
+      Inventory roomInv = room.getInventory();
+      roomInv.addItem(new Item.Builder("SCROLL")
+              .withDescription("This look very important")
+              .withReadText("As part of the Monkey King's collection, this scroll...")
+              .withIsKey(true)
+              .withCanRead(true)
+              .build()
+      );
+    }
   }
 
   public List<Room> getRoomList(){
@@ -133,10 +143,14 @@ public class Game {
     }
   }
 
-    public boolean swapItems(String item, Inventory fromInv, Inventory toInv) {
-      if (fromInv.getItems().contains(item)) {
-        fromInv.removeItem(item);
-        toInv.addItem(item);
+    public boolean swapItems(String itemName, Inventory fromInv, Inventory toInv) {
+      // Check that item exists in fromInv
+      // Check that item can be carried
+      //
+      if (fromInv.getItem(itemName) != null) {
+        Item swappedItem = fromInv.getItem(itemName);
+        fromInv.removeItem(swappedItem);
+        toInv.addItem(swappedItem);
         return true;
       } else {
         return false;
