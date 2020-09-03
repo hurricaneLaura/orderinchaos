@@ -38,6 +38,7 @@ public class Inventory {
     }
     return result;
   }
+
   public List<Item> getItems() {
     return inventory;
   }

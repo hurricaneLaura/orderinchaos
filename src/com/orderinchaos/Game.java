@@ -79,7 +79,7 @@ public class Game {
   public Player changePhase(Room room, Player player) {
     while (room.isCleared() != true) {
       // TODO: look into putting these commands into a text file, their own class, or a higher scope
-      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP");
+      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
       String[] userInput = INPUT_HANDLER(validInput);
       actionDelegator(userInput, room, player);
       room.setCleared();
@@ -123,11 +123,20 @@ public class Game {
         break;
       case "READ": read(userInput[1], room, player);
         break;
+      case "CHECK":
+        check(userInput[1],room, player);
+        break;
       default:
         break;
     }
   }
-
+    public void check(String input, Room room, Player player) {
+      // print current location and current inventory
+      if ("STATUS".equals(input)) {
+        System.out.println(room.getName());
+        System.out.println(player.getInventory().toString());
+      }
+    }
     public void look(String input, Room room, Player player) {
       String result = "I don't see anything";
       Item playerItem = player.getInventory().getItem(input);

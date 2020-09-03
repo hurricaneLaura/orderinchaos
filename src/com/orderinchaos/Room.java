@@ -49,6 +49,7 @@ public class Room {
 
     boolean sizeCleared = (inventory.getItems().size() == 0);
     boolean keysCleared = ( ! inventory.checkKeys() );
+
     List<Boolean> clearedConditions = new ArrayList<>(List.of(sizeCleared,keysCleared));
 
     if (clearedConditions.contains(false)) {
