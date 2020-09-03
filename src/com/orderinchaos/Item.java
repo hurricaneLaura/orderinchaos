@@ -1,7 +1,8 @@
 package com.orderinchaos;
 
-// Sample use Item.Builder("name").withDescription("some description").withReadText("some readable text").withIsKey(true).build()
-// Returns an Item object with the specified values and defaults for the rest of the attributes.
+// Minimum requirement to construct a new item - Item.Builder(String name).build()
+// Specify additional properties by chaining their methods in Builder: .withDescription(String description) .withIsKey(Boolean isKey) etc.
+// .build() must be the last method in a Builder chain, as it is responsible for returning the instance of Item.
 public class Item {
     private String name;
     private String description;
@@ -10,6 +11,7 @@ public class Item {
     private boolean canCarry;
     private boolean canRead;
 
+    // Only need one private constructor as inner Builder class methods will take care of which properties to initialize
     private Item(String name, String description, String readText, boolean isKey, boolean canCarry, boolean canRead) {
         this.name = name;
         this.description = description;
@@ -43,9 +45,10 @@ public class Item {
         return canRead;
     }
 
+    // sneaky class living inside another class
+    // builder design pattern :}
     public static class Builder {
-        // sneaky class living inside another class
-        // builder design pattern :}
+
         private String name;
         private String description;
         private String readText;
@@ -53,6 +56,7 @@ public class Item {
         private Boolean canCarry;
         private Boolean canRead;
 
+        // all instances of Builder, and therefore Item, must have a name specified (no defaults!)
         public Builder(String name) {
             this.name = name;
         }
@@ -95,4 +99,15 @@ public class Item {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", readText='" + readText + '\'' +
+                ", isKey=" + isKey +
+                ", canCarry=" + canCarry +
+                ", canRead=" + canRead +
+                '}';
+    }
 }
