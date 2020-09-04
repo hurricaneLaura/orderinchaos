@@ -47,8 +47,7 @@ public class Game {
   }
 
   private void intro() {
-    Stream<String> intro = Util.TEXT_READER("intro.txt");
-    STREAM_DISPLAY(intro, 300);
+    PRINT_TEXT_FILE("intro.txt", 300);
     Scanner wait = new Scanner(System.in);
     System.out.print("Press ENTER to continue...");
     String userInput = wait.nextLine();
@@ -61,8 +60,7 @@ public class Game {
 
   // TODO: display how to play guide
   private void loadHowToPlay() {
-    Stream<String> instruction = Util.TEXT_READER("instruction.txt");
-    STREAM_DISPLAY(instruction, 0);
+    PRINT_TEXT_FILE("instruction.txt", 0);
     Scanner wait = new Scanner(System.in);
     System.out.print("Press ENTER to go back...");
     String userInput = wait.nextLine();
@@ -159,7 +157,7 @@ public class Game {
       Item playerItem = player.getInventory().getItem(input);
       Item roomItem = room.getInventory().getItem(input);
       if (playerItem != null && playerItem.canRead()) {
-        Util.PRINT_TEXT_FILE("scroll.txt", 200);
+        PRINT_TEXT_FILE("scroll.txt", 200);
         result = playerItem.getReadText();
       } else if (roomItem != null && roomItem.canRead()) {
         if (roomItem.canCarry()) {
