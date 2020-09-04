@@ -30,7 +30,7 @@ public class Item {
     }
 
     public String getReadText() {
-        return readText;
+        return readText + "\n";
     }
 
     public boolean isKey() {
