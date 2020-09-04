@@ -20,7 +20,7 @@ public class Game {
 
   private void mainMenu() {
     // DONE: load start screen (new game, load game, how to play)
-    printBanner();
+    Util.PRINT_TEXT_FILE("banner.txt", 300);
     int userInput = INPUT_HANDLER();
     CLEAR_SCREEN();
     switch (userInput) {
@@ -97,7 +97,7 @@ public class Game {
       Inventory roomInv = room.getInventory();
       roomInv.addItem(new Item.Builder("SCROLL")
               .withDescription("This look very important")
-              .withReadText("As part of the Monkey King's collection, this scroll...")
+              .withReadText("After his invitation to Heaven, the Monkey King believed that he was receiving an honorable place amongst the gods.\nHowever, upon his arrival, he was told that he would become ‘Protector of the Horses’: a lowly stable boy.")
               .withIsKey(true)
               .withCanRead(true)
               .build()
@@ -107,10 +107,6 @@ public class Game {
 
   public List<Room> getRoomList(){
     return Collections.unmodifiableList(roomList);
-  }
-
-  public void printBanner() {
-    Util.STREAM_DISPLAY(Util.TEXT_READER("banner.txt"), 300);
   }
 
   public void actionDelegator(String[] userInput, Room room, Player player) {
@@ -158,12 +154,13 @@ public class Game {
       String result = "I have heard the sound of one hand clapping, yet this I cannot comprehend.";
       Item playerItem = player.getInventory().getItem(input);
       Item roomItem = room.getInventory().getItem(input);
-      if (playerItem != null) {
-        if (playerItem.canRead()) {
-          result = playerItem.getReadText();
-        }
-      } else if (roomItem != null){
-        if (roomItem.canRead()) {
+      if (playerItem != null && playerItem.canRead()) {
+        Util.PRINT_TEXT_FILE("scroll.txt", 200);
+        result = playerItem.getReadText();
+      } else if (roomItem != null && roomItem.canRead()) {
+        if (roomItem.canCarry()) {
+          result = "I can't reach that!";
+        } else {
           result = roomItem.getReadText();
         }
       }

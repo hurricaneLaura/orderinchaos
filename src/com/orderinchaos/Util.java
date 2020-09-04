@@ -190,4 +190,8 @@ public class Util {
       e.printStackTrace();
     }
   }
+
+  public static void PRINT_TEXT_FILE(String txtFile, int duration) {
+    STREAM_DISPLAY(Util.TEXT_READER(txtFile), duration);
+  }
 }
