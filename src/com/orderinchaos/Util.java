@@ -50,27 +50,27 @@ public class Util {
 
   public static String[] INPUT_HANDLER(List<String> validCommands, String file) {
     String[] userInput = new String[2];
+    // TODO: send to call API
 //    validCommands.forEach(cmd -> sendGetRequest(cmd));
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
+        String input = "";
         if (file == null) {
           System.out.print("\t>>> ");
           scanner = new Scanner(System.in);
+          input = scanner.nextLine();
         } else {
           // TODO: Read file and get commands for test
           try {
-            scanner = new Scanner(new File(file));
+            scanner = new Scanner(new File("docs/tests/" + file));
             while (scanner.hasNext()) {
-              String line = scanner.nextLine();
-              System.out.println(line);
+              input = scanner.nextLine();
             }
-            scanner.close();
           } catch (FileNotFoundException e) {
             e.printStackTrace();
           }
         }
-        String input = scanner.nextLine();
         String[] inputArr = input.toUpperCase().trim().split(" ",2);
         String verb = inputArr[0].trim();
         String noun = inputArr[1].trim();
@@ -91,7 +91,6 @@ public class Util {
         e.printStackTrace();
       }
     }
-
     return userInput;
   }
 
@@ -131,15 +130,20 @@ public class Util {
   private static String checkSynonyms(String verb) {
     // TODO: store in a HashMap and return key
     Stream<String> words = TEXT_READER("synonyms.txt");
-    String result = "";
+    List<String> result = new ArrayList<>();
     words.forEach(line -> {
       String[] synonyms = line.toUpperCase().split("[,]");
       if (Arrays.asList(synonyms).contains(verb)) {
-        result.concat(synonyms[0]);
+        result.add(synonyms[0]);
       }
     });
 
-    return result;
+    if (result.size() > 0) {
+      return result.get(0);
+    } else {
+      return null;
+    }
+
   }
 
   public static Stream<String> TEXT_READER(String fileName) {
