@@ -1,12 +1,21 @@
 package com.orderinchaos;
 
-import java.io.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.CompletionException;
 import java.util.stream.Stream;
 
 public class Util {
@@ -41,7 +50,7 @@ public class Util {
 
   public static String[] INPUT_HANDLER(List<String> validCommands, String file) {
     String[] userInput = new String[2];
-    sendGetRequest(validCommands.get(0));
+//    validCommands.forEach(cmd -> sendGetRequest(cmd));
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
@@ -87,40 +96,36 @@ public class Util {
   }
 
   private static void sendGetRequest(String verb) {
-    // TODO: Send GET request to Dictionary API (umpire?key=your-api-key)
-    BufferedReader reader;
-    String line;
-    StringBuffer resContent = new StringBuffer();
+    // DONE: Send GET request to Dictionary API (word?key=your-api-key)
+    String dictionaryUrl = "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/";
+    String key = GET_KEY("config.txt");
+
+    HttpClient client = HttpClient.newHttpClient();
+    HttpRequest req = HttpRequest.newBuilder().uri(URI.create(dictionaryUrl.concat(verb).concat("?key=").concat(key))).build();
+    List<String> syns = client.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+            .thenApply(HttpResponse::body)
+            .thenApply(Util::parse)
+            .join();
+
+    // TODO: Save HashMap<String, List<String>> synonyms
+  }
+
+  private static List<String> parse(String res) {
+    List<String> result = new ArrayList<>();
     try {
-      String key = GET_KEY("config.txt");
-      String dictionaryUrl = "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/";
-      // DONE: hide api-key
-      URL url = new URL(dictionaryUrl.concat(verb).concat("?key=").concat(key));
-      connection = (HttpURLConnection) url.openConnection();
-      connection.setRequestMethod("GET");
-      connection.setConnectTimeout(3000);
-      connection.setReadTimeout(3000);
+      JSONObject meta = new JSONArray(res).getJSONObject(0).getJSONObject("meta");
+      JSONArray synonyms = meta.getJSONArray("syns").getJSONArray(0);
 
-      int status = connection.getResponseCode();
-
-      if (status == 200) {
-        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-      } else {
-        reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+      for (int i = 0; i < synonyms.length(); i++) {
+        result.add(synonyms.getString(i));
       }
-      while ((line = reader.readLine()) != null) {
-        resContent.append(line);
-      }
-      reader.close();
-      System.out.println(resContent.toString());
-    } catch (MalformedURLException e) {
+    } catch (CompletionException e) {
       e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      connection.disconnect();
+    } catch (JSONException e) {
+      System.out.println("Error: " + e.getMessage());
     }
 
+    return result;
   }
 
   private static String checkSynonyms(String verb) {
