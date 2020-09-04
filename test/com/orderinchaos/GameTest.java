@@ -15,7 +15,7 @@ public class GameTest {
     @Before
     public void init() {
        game = new Game();
-       room = new Room("Test Room","TLDR","SCROLL");
+       room = new Room("Test Room","TLDR");
     }
 
 //    @Test
