@@ -71,6 +71,7 @@ public class Game {
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
       STREAM_DISPLAY(room.getDescription().stream(), 0);
+      room.presentRiddle();
       changePhase(room, player);
     }
     end();
@@ -88,10 +89,13 @@ public class Game {
   }
 
   public void loadRooms() {
+
     Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
     descriptions.forEach(line -> {
       String[] tempArray = line.split("[|]");
-      roomList.add(new Room(tempArray[0], tempArray[1]));
+      // TODO: check if remove() returns value
+      Riddle riddle = riddles.remove(0);
+      roomList.add(new Room(tempArray[0], tempArray[1], riddle));
     });
     for (Room room : roomList) {
       Inventory roomInv = room.getInventory();
@@ -204,7 +208,7 @@ public class Game {
   public void end() {
     Scanner endSc = new Scanner(System.in);
     System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
-    System.out.println("\n" + "What would you like to do?" + ">play again" + "\n" + ">quit");
+    System.out.println("\n" + "What would you like to do?" + "\n" + ">play again" + "\n" + ">quit");
     String Question = endSc.nextLine();
     if (Question.toLowerCase().contains("quit")) {
       System.exit(0);
@@ -219,6 +223,30 @@ public class Game {
 
   public Player getPlayer() {
     return player;
+  }
+
+  private static List<Riddle> riddles = new ArrayList<>();
+
+  static {
+    Riddle riddle = new Riddle("Its the answer to every question you've got. When you think you have it, you have it not. What is the answer?", "knowledge");
+    riddles.add(riddle);
+    riddle = new Riddle("What word is right when pronounced wrong, but is wrong when pronounced right?", "wrong");
+    riddles.add(riddle);
+    riddle = new Riddle("What has six faces, but does not wear makeup, has twenty-one eyes, but cannot see? What is it?", "dice");
+    riddles.add(riddle);
+    riddle = new Riddle("I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", "fire");
+    riddles.add(riddle);
+    riddle = new Riddle("What runs around the whole yard without moving?", "fence");
+    riddles.add(riddle);
+    riddle = new Riddle("Who is that with a neck and no head, two arms and no hands?  What is it?", "shirt");
+    riddles.add(riddle);
+    riddle = new Riddle("David's father has three sons: Snap, Crackle, and _____?", "david");
+    riddles.add(riddle);
+    riddle = new Riddle("What belongs to you, but other people use it more than you?", "name");
+    riddles.add(riddle);
+    riddle = new Riddle("I make two people out of one. What am I?", "mirror");
+    riddles.add(riddle);
+    Collections.shuffle(riddles);
   }
 }
 
