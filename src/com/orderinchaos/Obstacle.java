@@ -5,7 +5,13 @@ import java.util.Scanner;
 public class Obstacle {
   // FIELDS/ ATTRIBUTES
   private boolean pass;
-  private int attempts = 4;
+  private Riddle riddle;
+  private static final int ATTEMPTS = 4;
+
+
+  public Obstacle(Riddle riddle) {
+    setRiddle(riddle);
+  }
 
   // ON YOUR MARK
   public boolean isPass() {
@@ -17,32 +23,31 @@ public class Obstacle {
   }
 
   public int getAttempts() {
-    return attempts;
+    return ATTEMPTS;
   }
 
-  public void setAttempts(int attempts) {
-    this.attempts = attempts;
+  private void setRiddle (Riddle riddle) {
+    this.riddle = riddle;
   }
 
   // BUSINESS METHODS
-  // TODO: create a riddle list
   public void displayRiddle() {
+    int attemptsLeft = getAttempts();
     Scanner sc = new Scanner(System.in);
-    Riddle currentRiddle = Riddle.getRiddle();
-    System.out.println(currentRiddle.getQuestion());
+    System.out.println(riddle.getQuestion());
     String userAttempt = sc.nextLine();
 
-    while (attempts > 0) {
-      boolean isCorrect = userAttempt.toLowerCase().contains(currentRiddle.getAnswer());
+    while (attemptsLeft > 0) {
+      boolean isCorrect = userAttempt.toLowerCase().contains(riddle.getAnswer());
 
       if (isCorrect) {
         System.out.println("Success");
         success();
         break;
       } else {
-        attempts = attempts - 1;
-        System.out.println("That is not the correct answer. You have " + attempts + " attempts remaining");
-        if (attempts == 0) {
+        attemptsLeft = attemptsLeft - 1;
+        System.out.println("That is not the correct answer. You have " + attemptsLeft + " attempts remaining");
+        if (attemptsLeft == 0) {
           System.out.println("You have failed us all, demons continue their evil rule unimpeded.");
           System.exit(0);
         } else {
