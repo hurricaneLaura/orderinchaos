@@ -147,7 +147,7 @@ public class Game {
   public void end() {
     Scanner endSc = new Scanner(System.in);
     System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
-    System.out.println("\n" + "What would you like to do?" + ">play again" + "\n" + ">quit");
+    System.out.println("\n" + "What would you like to do?" + "\n" + ">play again" + "\n" + ">quit");
     String Question = endSc.nextLine();
     if (Question.toLowerCase().contains("quit")) {
       System.exit(0);
