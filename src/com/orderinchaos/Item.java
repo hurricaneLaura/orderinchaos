@@ -99,8 +99,7 @@ public class Item {
         }
     }
 
-    @Override
-    public String toString() {
+    public String debugToString() {
         return "Item{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -109,5 +108,9 @@ public class Item {
                 ", canCarry=" + canCarry +
                 ", canRead=" + canRead +
                 '}';
+    }
+    @Override
+    public String toString() {
+        return name;
     }
 }

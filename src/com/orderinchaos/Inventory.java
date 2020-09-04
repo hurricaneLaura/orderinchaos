@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-  private List<Item> inventory = new ArrayList<>();
+  private List<Item> items = new ArrayList<>();
 
   // CONSTRUCTORS
   public Inventory () {
@@ -12,13 +12,13 @@ public class Inventory {
   }
 
   // TODO: set inventory create accessor methods
-  public Inventory(List<Item> inventory) {
-    setInventory(inventory);
+  public Inventory(List<Item> items) {
+    setItems(items);
   }
 
   public Item getItem(String name) {
     Item result = null;
-    for (Item item : inventory) {
+    for (Item item : items) {
       if (item.getName().equals(name)) {
         result = item;
       }
@@ -29,8 +29,8 @@ public class Inventory {
   // Used for room clear condition. Just checking if one or more items in inventory are keys.
   public boolean checkKeys() {
     boolean result = false;
-    if ( ! inventory.isEmpty() ) {
-      for (Item item : inventory) {
+    if ( ! items.isEmpty() ) {
+      for (Item item : items) {
         if (item.isKey()) {
           result = true;
         }
@@ -40,20 +40,20 @@ public class Inventory {
   }
 
   public List<Item> getItems() {
-    return inventory;
+    return items;
   }
 
-  public void setInventory(List<Item> inventory) {
-    this.inventory = inventory;
+  public void setItems(List<Item> items) {
+    this.items = items;
   }
 
   public void addItem(Item item) {
-    inventory.add(item);
+    items.add(item);
   }
 
   public void removeItem(Item item) {
     // DONE: CHECK IF INVENTORY CONTAINS ITEM.
-      inventory.remove(item);
+      items.remove(item);
   }
 
   // TODO: use getInventory instead of directly accessing inventory
@@ -72,7 +72,7 @@ public class Inventory {
   @Override
   public String toString() {
     return "Inventory{" +
-            "inventory=" + inventory +
+            "inventory=" + items +
             '}';
   }
 }
