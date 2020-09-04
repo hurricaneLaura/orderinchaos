@@ -139,12 +139,16 @@ public class Game {
     }
     public void look(String input, Room room, Player player) {
       String result = "I don't see anything";
-      Item playerItem = player.getInventory().getItem(input);
-      Item roomItem = room.getInventory().getItem(input);
-      if (playerItem != null) {
-        result = playerItem.getDescription();
-      } else if (roomItem != null){
-        result = roomItem.getDescription();
+      if ("AROUND".equals(input)) {
+        result = ("You are in the " +room.getName() + ". You can see a few items: " + room.getInventory().getItems().toString());
+      } else {
+        Item playerItem = player.getInventory().getItem(input);
+        Item roomItem = room.getInventory().getItem(input);
+        if (playerItem != null) {
+          result = playerItem.getDescription();
+        } else if (roomItem != null) {
+          result = roomItem.getDescription();
+        }
       }
       System.out.println(result);
 
