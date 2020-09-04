@@ -11,11 +11,17 @@ public class Room {
   private boolean isCleared = false;
   private Inventory readItems = new Inventory();
   private Inventory inventory = new Inventory();
+  private Obstacle obstacle;
 
-  // CTOR
+  // CONSTRUCTOR
   public Room(String name, String description) {
     setName(name);
     setDescription(description);
+  }
+
+  public Room(String name, String description, Riddle riddle) {
+    this(name,description);
+    setObstacle(riddle);
   }
 
   // ACCESSOR METHODS
@@ -36,8 +42,12 @@ public class Room {
     for (String line : lines) {
       this.description.add(line.trim().concat("."));
     }
+
   }
 
+  private void setObstacle(Riddle riddle) {
+    obstacle = new Obstacle(riddle);
+  }
 
   public boolean isCleared() {
     return isCleared;
@@ -57,7 +67,6 @@ public class Room {
     } else {
       this.isCleared = true;
     }
-
   }
 
   public Inventory getReadItems() {
@@ -72,5 +81,9 @@ public class Room {
   }
   public Inventory getInventory() {
     return inventory;
+  }
+
+  public void presentRiddle() {
+    obstacle.displayRiddle();
   }
 }

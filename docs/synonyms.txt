@@ -2,3 +2,4 @@ take,grab,get,add,hold
 drop,remove,discard,eliminate
 look,see,glance,stare
 read,skim,view
+check
