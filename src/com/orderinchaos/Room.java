@@ -13,10 +13,9 @@ public class Room {
   private Inventory inventory = new Inventory();
 
   // CTOR
-  public Room(String name, String description, String item) {
+  public Room(String name, String description) {
     setName(name);
     setDescription(description);
-    getInventory().addItem(item);
   }
 
   // ACCESSOR METHODS
@@ -46,11 +45,19 @@ public class Room {
 
   // A room is considered clear when all items have been taken, no enemies exist, no puzzles are left to solve
   public void setCleared() {
-    if (inventory.getItems().size() != 0) {
+    // true values for clear
+
+    boolean sizeCleared = (inventory.getItems().size() == 0);
+    boolean keysCleared = ( ! inventory.checkKeys() );
+
+    List<Boolean> clearedConditions = new ArrayList<>(List.of(sizeCleared,keysCleared));
+
+    if (clearedConditions.contains(false)) {
       this.isCleared = false;
     } else {
       this.isCleared = true;
     }
+
   }
 
   public Inventory getReadItems() {
