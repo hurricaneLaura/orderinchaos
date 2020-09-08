@@ -12,7 +12,6 @@ public class Game {
 
   // Load roomList
 
-
   public void runGame() {
     mainMenu();
     // TODO: start adventure phase
@@ -211,7 +210,7 @@ public class Game {
       if (Question.toLowerCase().contains("play again")) {
         newGame();
       } else {
-        System.out.println("You have failed us all, try again later");
+        System.out.println("It's neither play again nor quit...");
       }
     }
   }
