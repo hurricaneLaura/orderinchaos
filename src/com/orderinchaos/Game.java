@@ -63,6 +63,7 @@ public class Game {
     Scanner wait = new Scanner(System.in);
     System.out.print("Press ENTER to go back...");
     String userInput = wait.nextLine();
+    CLEAR_SCREEN();
   }
 
   public void roomEvents(Player player, List<Room> roomList) {
@@ -79,6 +80,8 @@ public class Game {
       // TODO: look into putting these commands into a text file, their own class, or a higher scope
       List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
       String[] userInput = INPUT_HANDLER(validInput);
+      // TODO: print user input iot confirm : Do we want to display native vs synonym cmd
+      System.out.println((userInput[0] + " " + userInput[1]).toUpperCase());
       actionDelegator(userInput, room, player);
       room.setCleared();
     }

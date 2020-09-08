@@ -51,7 +51,6 @@ public class Util {
   public static String[] INPUT_HANDLER(List<String> validCommands, String file) {
     String[] userInput = new String[2];
     // TODO: send to call API upon start
-    validCommands.forEach(cmd -> sendGetRequest(cmd));
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
@@ -81,6 +80,7 @@ public class Util {
           isValidInput = true;
           userInput[0] = synonym;
           userInput[1] = noun;
+          CLEAR_SCREEN();
         } else {
           System.out.println("I'm not sure what " + input + " means...");
         }
@@ -105,8 +105,6 @@ public class Util {
             .thenApply(HttpResponse::body)
             .thenApply(Util::parse)
             .join();
-
-    syns.forEach(System.out::println);
 
     // TODO: Save HashMap<String, List<String>> synonyms
   }
