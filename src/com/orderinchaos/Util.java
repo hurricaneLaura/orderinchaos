@@ -53,16 +53,18 @@ public class Util {
     System.out.println(ANSI_CYAN  + text + ANSI_RESET);
   }
 
-  public static int INPUT_HANDLER() {
+  public static int INPUT_HANDLER(String[] items) {
     int userInput = 1;
     boolean validInput = false;
-    String prompt = "1: New Game\n2: Load Game\n3: How to Play";
     while (!validInput) {
       try{
-        System.out.println(prompt);
+        for (int i = 0; i < items.length; i++) {
+          System.out.print(i+1 + ": " + items[i] + "\t\t");
+        }
+        System.out.println();
         scanner = new Scanner(System.in);
         userInput = scanner.nextInt();
-        if (userInput >= 1 && userInput <= 3) {
+        if (userInput >= 1 && userInput <= items.length) {
           validInput = true;
         } else {
           System.out.println("Please select an item from the menu.");
@@ -81,8 +83,7 @@ public class Util {
 
   public static String[] INPUT_HANDLER(List<String> validCommands, String file) {
     String[] userInput = new String[2];
-    // TODO: send to call API
-//    validCommands.forEach(cmd -> sendGetRequest(cmd));
+    // TODO: send to call API upon start
     boolean isValidInput = false;
     while (!isValidInput) {
       try{
@@ -112,6 +113,7 @@ public class Util {
           isValidInput = true;
           userInput[0] = synonym;
           userInput[1] = noun;
+          CLEAR_SCREEN();
         } else {
           System.out.println("I'm not sure what " + input + " means...");
         }
@@ -205,6 +207,29 @@ public class Util {
       }
     });
     System.out.print("\n");
+  }
+
+  public static void LOAD_SCREEN() {
+      try {
+        System.out.print("\r  |  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  0  %");
+        Thread.sleep(75);
+        System.out.print("\r  |██████  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  10 %");
+        Thread.sleep(150);
+        System.out.print("\r  |██████████████████  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  30 %");
+        Thread.sleep(100);
+        System.out.print("\r  |███████████████████████████████████-  -  -  -  -  -  -  -  -  |  50 %");
+        Thread.sleep(200);
+        System.out.print("\r  |█████████████████████████████████████████████████ -  -  -  -  |  75 %");
+        Thread.sleep(300);
+        System.out.print("\r  |██████████████████████████████████████████████████████  -  -  |  85 %");
+        Thread.sleep(150);
+        System.out.print("\r  |██████████████████████████████████████████████████████████████|  100%");
+        Thread.sleep(75);
+      }
+      catch(Exception e) {
+        System.err.println(e);
+      }
+    System.out.println("\r              ");
   }
 
   public static void CLEAR_SCREEN() {
