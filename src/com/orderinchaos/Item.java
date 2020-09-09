@@ -45,6 +45,10 @@ public class Item {
         return canRead;
     }
 
+    public void setCanCarry(boolean bool) {
+        this.canCarry = bool;
+    }
+
     // sneaky class living inside another class
     // builder design pattern :}
     public static class Builder {

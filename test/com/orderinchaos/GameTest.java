@@ -40,7 +40,7 @@ public class GameTest {
         assertEquals(playerExpected, playerActual);
 
 
-        game.actionDelegator(userInput, room, player);
+        ActionUtil.actionDelegator(userInput, room, player);
         // After inventories have been swapped
         roomActual = room.getInventory().getItems().size();
         roomExpected = 0;
@@ -67,7 +67,7 @@ public class GameTest {
         assertEquals(playerExpected, playerActual);
 
 
-        game.actionDelegator(userInput, room, player);
+        ActionUtil.actionDelegator(userInput, room, player);
         // After inventories have been swapped
         roomActual = room.getInventory().getItems().size();
         roomExpected = 1;
