@@ -49,7 +49,7 @@ public class Game {
   private void intro() {
     PRINT_TEXT_FILE("intro.txt", 300);
     Scanner wait = new Scanner(System.in);
-    System.out.print("Press ENTER to continue...");
+    Util.blue("Press ENTER to continue...");
     String userInput = wait.nextLine();
   }
 
@@ -98,106 +98,114 @@ public class Game {
     for (Room room : roomList) {
       Inventory roomInv = room.getInventory();
       roomInv.addItem(new Item.Builder("SCROLL")
-              .withDescription("This look very important")
-              .withReadText("After his invitation to Heaven, the Monkey King believed that he was receiving an honorable place amongst the gods.\nHowever, upon his arrival, he was told that he would become ‘Protector of the Horses’: a lowly stable boy.")
-              .withIsKey(true)
-              .withCanRead(true)
-              .build()
+        .withDescription("This look very important")
+        .withReadText("After his invitation to Heaven, the Monkey King believed that he was receiving an honorable place amongst the gods.\nHowever, upon his arrival, he was told that he would become ‘Protector of the Horses’: a lowly stable boy.")
+        .withIsKey(true)
+        .withCanRead(true)
+        .build()
       );
     }
   }
 
-  public List<Room> getRoomList(){
+  public List<Room> getRoomList() {
     return Collections.unmodifiableList(roomList);
   }
 
   public void actionDelegator(String[] userInput, Room room, Player player) {
     switch (userInput[0]) {
-      case "TAKE": take(userInput[1], room, player);
+      case "TAKE":
+        take(userInput[1], room, player);
         break;
-      case "DROP": drop(userInput[1],player, room);
+      case "DROP":
+        drop(userInput[1], player, room);
         break;
-      case "LOOK": look(userInput[1], room, player);
+      case "LOOK":
+        look(userInput[1], room, player);
         break;
-      case "READ": read(userInput[1], room, player);
+      case "READ":
+        read(userInput[1], room, player);
         break;
       case "CHECK":
-        check(userInput[1],room, player);
+        check(userInput[1], room, player);
         break;
       default:
         break;
     }
   }
-    public void check(String input, Room room, Player player) {
-      // print current location and current inventory
-      if ("STATUS".equals(input)) {
-        System.out.println(room.getName());
-        System.out.println(player.getInventory().toString());
-      }
-    }
-    public void look(String input, Room room, Player player) {
-      String result = "I don't see anything";
-      if ("AROUND".equals(input)) {
-        result = ("You are in the " +room.getName() + ". You can see a few items: " + room.getInventory().getItems().toString());
-      } else {
-        Item playerItem = player.getInventory().getItem(input);
-        Item roomItem = room.getInventory().getItem(input);
-        if (playerItem != null) {
-          result = playerItem.getDescription();
-        } else if (roomItem != null) {
-          result = roomItem.getDescription();
-        }
-      }
-      System.out.println(result);
 
+  public void check(String input, Room room, Player player) {
+    // print current location and current inventory
+    if ("STATUS".equals(input)) {
+      System.out.println(room.getName());
+      System.out.println(player.getInventory().toString());
     }
+  }
 
-    public void read(String input, Room room, Player player) {
-      String result = "I have heard the sound of one hand clapping, yet this I cannot comprehend.";
+  public void look(String input, Room room, Player player) {
+    String result = "I don't see anything";
+    if ("AROUND".equals(input)) {
+      result = ("You are in the " + room.getName() + ". You can see a few items: " + room.getInventory().getItems().toString());
+    } else {
       Item playerItem = player.getInventory().getItem(input);
       Item roomItem = room.getInventory().getItem(input);
-      if (playerItem != null && playerItem.canRead()) {
-        PRINT_TEXT_FILE("scroll.txt", 200);
-        result = playerItem.getReadText();
-      } else if (roomItem != null && roomItem.canRead()) {
-        if (roomItem.canCarry()) {
-          result = "I can't reach that!";
-        } else {
-          result = roomItem.getReadText();
-        }
+      if (playerItem != null) {
+        result = playerItem.getDescription();
+      } else if (roomItem != null) {
+        result = roomItem.getDescription();
       }
-      System.out.println(result);
+    }
+    System.out.println(result);
 
-    }
+  }
 
-    public void take(String itemName, Room room, Player player) {
-      if (swapItems(itemName,room.getInventory(), player.getInventory())) {
-        System.out.println(itemName + " taken!");
+  public void read(String input, Room room, Player player) {
+    String result = "I have heard the sound of one hand clapping, yet this I cannot comprehend.";
+    Item playerItem = player.getInventory().getItem(input);
+    Item roomItem = room.getInventory().getItem(input);
+    if (playerItem != null && playerItem.canRead()) {
+      PRINT_TEXT_FILE("scroll.txt", 200);
+      result = playerItem.getReadText();
+    } else if (roomItem != null && roomItem.canRead()) {
+      if (roomItem.canCarry()) {
+        result = "I can't reach that!";
       } else {
-        System.out.println("There aren't any to take!");
+        result = roomItem.getReadText();
       }
     }
+    System.out.println(result);
 
-    public void drop(String itemName, Player player, Room room) {
-      if (swapItems(itemName, player.getInventory(), room.getInventory())) {
-        System.out.println(itemName + " dropped!");
-      } else {
-        System.out.println("You don't have any to drop.");
-      }
+  }
+
+  public void take(String itemName, Room room, Player player) {
+    if (swapItems(itemName, room.getInventory(), player.getInventory())) {
+      System.out.println(itemName + " taken!");
+    } else {
+      System.out.println("There aren't any to take!");
     }
-    public boolean swapItems(String itemName, Inventory fromInv, Inventory toInv) {
-      // Check that item exists in fromInv
-      // Check that item can be carried
-      //
-      if (fromInv.getItem(itemName) != null) {
-        Item swappedItem = fromInv.getItem(itemName);
-        fromInv.removeItem(swappedItem);
-        toInv.addItem(swappedItem);
-        return true;
-      } else {
-        return false;
-      }
+  }
+
+  public void drop(String itemName, Player player, Room room) {
+    if (swapItems(itemName, player.getInventory(), room.getInventory())) {
+      System.out.println(itemName + " dropped!");
+    } else {
+      System.out.println("You don't have any to drop.");
     }
+  }
+  // drop(a,b,c);
+
+  public boolean swapItems(String itemName, Inventory fromInv, Inventory toInv) {
+    // Check that item exists in fromInv
+    // Check that item can be carried
+    //
+    if (fromInv.getItem(itemName) != null) {
+      Item swappedItem = fromInv.getItem(itemName);
+      fromInv.removeItem(swappedItem);
+      toInv.addItem(swappedItem);
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   // TODO: validate user input
   public void end() {
@@ -243,6 +251,16 @@ public class Game {
     riddles.add(riddle);
     Collections.shuffle(riddles);
   }
+
+//  public void verifyRiddle(Room room) {
+//    Util.INPUT_HANDLER("yes");
+//    System.out.println("do you want to attempt this Riddle? \nyes \nno");
+//    if (Util.INPUT_HANDLER("yes")) {
+//      room.presentRiddle();
+//    } else {
+//      System.out.println("some 'user' thought");
+//    }
+//  }
 }
 
 
