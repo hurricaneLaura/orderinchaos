@@ -13,6 +13,7 @@ public class Game {
   // Load roomList
 
   public void runGame() {
+    LOAD_SCREEN();
     mainMenu();
     // TODO: start adventure phase
   }
@@ -20,7 +21,8 @@ public class Game {
   private void mainMenu() {
     // DONE: load start screen (new game, load game, how to play)
     Util.PRINT_TEXT_FILE("banner.txt", 300);
-    int userInput = INPUT_HANDLER();
+    String[] prompt = {"New Game", "Load Game", "How to Play"};
+    int userInput = INPUT_HANDLER(prompt);
     CLEAR_SCREEN();
     switch (userInput) {
       case 1:
@@ -203,18 +205,20 @@ public class Game {
 
   // TODO: validate user input
   public void end() {
-    Scanner endSc = new Scanner(System.in);
+    String[] playAgain = {"play again", "quit"};
     System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
-    System.out.println("\n" + "What would you like to do?" + "\n" + ">play again" + "\n" + ">quit");
-    String Question = endSc.nextLine();
-    if (Question.toLowerCase().contains("quit")) {
-      System.exit(0);
-    } else {
-      if (Question.toLowerCase().contains("play again")) {
+    System.out.println("\n" + "What would you like to do?");
+    int userInput = INPUT_HANDLER(playAgain);
+    switch (userInput) {
+      case 1:
         newGame();
-      } else {
+        break;
+      case 2:
+        System.exit(0);
+        break;
+      default:
         System.out.println("It's neither play again nor quit...");
-      }
+        break;
     }
   }
 

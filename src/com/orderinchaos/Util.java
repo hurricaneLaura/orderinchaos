@@ -22,16 +22,18 @@ public class Util {
   private static Scanner scanner;
   private static HttpURLConnection connection;
 
-  public static int INPUT_HANDLER() {
+  public static int INPUT_HANDLER(String[] items) {
     int userInput = 1;
     boolean validInput = false;
-    String prompt = "1: New Game\n2: Load Game\n3: How to Play";
     while (!validInput) {
       try{
-        System.out.println(prompt);
+        for (String item : items) {
+          System.out.print(item + "\t\t");
+        }
+        System.out.println();
         scanner = new Scanner(System.in);
         userInput = scanner.nextInt();
-        if (userInput >= 1 && userInput <= 3) {
+        if (userInput >= 1 && userInput <= items.length) {
           validInput = true;
         } else {
           System.out.println("Please select an item from the menu.");
@@ -174,6 +176,29 @@ public class Util {
       }
     });
     System.out.print("\n");
+  }
+
+  public static void LOAD_SCREEN() {
+      try {
+        System.out.print("\r  |  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  0  %");
+        Thread.sleep(75);
+        System.out.print("\r  |██████  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  10 %");
+        Thread.sleep(150);
+        System.out.print("\r  |██████████████████  -  -  -  -  -  -  -  -  -  -  -  -  -  -  |  30 %");
+        Thread.sleep(100);
+        System.out.print("\r  |███████████████████████████████████-  -  -  -  -  -  -  -  -  |  50 %");
+        Thread.sleep(200);
+        System.out.print("\r  |█████████████████████████████████████████████████ -  -  -  -  |  75 %");
+        Thread.sleep(300);
+        System.out.print("\r  |██████████████████████████████████████████████████████  -  -  |  85 %");
+        Thread.sleep(150);
+        System.out.print("\r  |██████████████████████████████████████████████████████████████|  100%");
+        Thread.sleep(75);
+      }
+      catch(Exception e) {
+        System.err.println(e);
+      }
+    System.out.println("\r              ");
   }
 
   public static void CLEAR_SCREEN() {
