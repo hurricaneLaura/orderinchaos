@@ -27,8 +27,8 @@ public class Util {
     boolean validInput = false;
     while (!validInput) {
       try{
-        for (String item : items) {
-          System.out.print(item + "\t\t");
+        for (int i = 0; i < items.length; i++) {
+          System.out.print(i+1 + ": " + items[i] + "\t\t");
         }
         System.out.println();
         scanner = new Scanner(System.in);
