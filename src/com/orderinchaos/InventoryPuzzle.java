@@ -6,7 +6,7 @@ import java.util.List;
 
 import static com.orderinchaos.Util.INPUT_HANDLER;
 
-public class InventoryPuzzle {
+public class InventoryPuzzle extends Game{
     private boolean isCleared = false;
     private String[] userInput = {"",""};
     Inventory puzzleInventory;
@@ -42,11 +42,48 @@ public class InventoryPuzzle {
         while ( getCleared() != true) {
             userInput = INPUT_HANDLER(validInput);
             System.out.println(userInput[0] + " " + userInput[1]);
-            if ("NOSH".equals(userInput[0]) && "ALMS".equals(userInput[1])) {
+            actionDelegator(userInput, task);
+
+        }
+    }
+
+    public void actionDelegator(String[] userInput, Task task) {
+        switch (userInput[0].toUpperCase()) {
+            case "WARD":
+            case "NOSH":
+            case "REMEDY":
+                ward(userInput, task);
+            case "TAKE":
+                take(userInput);
+                break;
+            case "DROP":
+
+            case "CHECK":
+
+            default:
+                break;
+        }
+    }
+
+    private void take(String[] userInput) {
+        System.out.println("takeing");
+        if (playerInventory.getItems().size() > 0) {
+            System.out.println("I can only hold one item at a time!");
+        } else {
+            Item result = puzzleInventory.getItem(userInput[1]);
+            puzzleInventory.removeItem(result);
+            System.out.println(puzzleInventory.getItems());
+            playerInventory.addItem(result);
+            System.out.println(playerInventory.getItems());
+        }
+    }
+    private void ward(String[] userInput, Task task) {
+        if (playerInventory.getItem(userInput[1]) == null) {
+            System.out.println("I need to be holding that before I can use it!");
+        } else if ("NOSH".equals(userInput[0]) && "ALMS".equals(userInput[1])) {
                 setCleared();
                 System.out.println("you have cleared the puzzle !!!!");
                 task.interrupt();
-            }
         }
     }
     class Task extends Thread {
