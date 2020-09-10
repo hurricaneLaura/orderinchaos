@@ -8,7 +8,6 @@ public class Obstacle {
   private Riddle riddle;
   private static final int ATTEMPTS = 4;
 
-
   public Obstacle(Riddle riddle) {
     setRiddle(riddle);
   }
@@ -60,6 +59,12 @@ public class Obstacle {
 
   // TODO: give user a reward
   public void success() {
+    // clear screen
     System.out.println("very cool treasure added to inventory");
   }
 }
+
+/*
+
+
+ */
