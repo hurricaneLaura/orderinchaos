@@ -45,6 +45,10 @@ public class Item {
         return canRead;
     }
 
+    public void setCanCarry(boolean bool) {
+        this.canCarry = bool;
+    }
+
     // sneaky class living inside another class
     // builder design pattern :}
     public static class Builder {
@@ -90,7 +94,7 @@ public class Item {
             Item item = new Item(
                 this.name,
                 this.description == null ? "default value" : this.description,
-                this.readText == null ? "default text" : this.readText,
+                this.readText == null ? "This document is not well kept..." : this.readText,
                 this.isKey == null ? false: this.isKey,
                 this.canCarry == null ? true : this.canCarry,
                 this.canRead == null ? false : this.canRead

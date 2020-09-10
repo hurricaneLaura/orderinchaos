@@ -12,6 +12,7 @@ public class Room {
   private Inventory readItems = new Inventory();
   private Inventory inventory = new Inventory();
   private Obstacle obstacle;
+  private boolean isPuzzle = false;
 
   // CONSTRUCTOR
   public Room(String name, String description) {
@@ -66,6 +67,10 @@ public class Room {
     } else {
       this.isCleared = true;
     }
+  }
+
+  public void setIsPuzzle(boolean bool) {
+    this.isPuzzle = bool;
   }
 
   public Inventory getReadItems() {

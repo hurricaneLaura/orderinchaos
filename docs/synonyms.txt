@@ -3,3 +3,6 @@ drop,remove,discard,eliminate
 look,see,glance,stare
 read,skim,view
 check
+nosh, eat
+ward, guard
+remedy,heal
