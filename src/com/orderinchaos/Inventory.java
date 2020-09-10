@@ -46,6 +46,9 @@ public class Inventory {
   public void setItems(List<Item> items) {
     this.items = items;
   }
+  public void clearItems() {
+    this.items.clear();
+  }
 
   public void addItem(Item item) {
     items.add(item);
@@ -71,8 +74,6 @@ public class Inventory {
 
   @Override
   public String toString() {
-    return "Inventory{" +
-            "inventory=" + items +
-            '}';
+    return "Player Inventory: " + getItems();
   }
 }

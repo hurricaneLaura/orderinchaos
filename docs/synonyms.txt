@@ -4,3 +4,6 @@ look,see,glance,stare
 read,skim,view
 check
 save
+nosh, eat
+ward, guard
+remedy,heal
