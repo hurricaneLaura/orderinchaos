@@ -34,6 +34,7 @@ public class Obstacle {
 
   // BUSINESS METHODS
   public void displayRiddle() {
+    CLEAR_SCREEN();
     int attemptsLeft = getAttempts();
     Scanner sc = new Scanner(System.in);
     System.out.println(riddle.getQuestion());

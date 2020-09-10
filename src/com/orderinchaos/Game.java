@@ -107,7 +107,7 @@ public class Game {
       String[] userInput = INPUT_HANDLER(validInput);
       // TODO: print user input iot confirm : Do we want to display native vs synonym cmd
       String input = userInput[2];
-      System.out.println((input + " " + userInput[1]).toUpperCase());
+      System.out.println(("[[[" + input + " " + userInput[1] + "]]]").toUpperCase());
       ActionUtil.actionDelegator(userInput, room, player);
       room.setCleared();
     }
@@ -141,9 +141,10 @@ public class Game {
 
   // TODO: validate user input
   public void end(boolean didWin) {
+    CLEAR_SCREEN();
     String[] playAgain = {"play again", "quit"};
     if (didWin) {
-      System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
+      System.out.println("Success! you have rescued the monkey king. \nWith the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
     } else {
       System.out.println("You have failed us all...");
     }
@@ -194,6 +195,7 @@ public class Game {
     double rand = Math.random();
     if (rand < 0.5) {
       verifyRiddle(room);
+      STREAM_DISPLAY(room.getDescription().stream(),0);
     }
   }
 
@@ -201,12 +203,19 @@ public class Game {
     String[] verifyRiddle = {"yes", "no"};
     System.out.println("do you want to attempt this Riddle?");
     int input = Util.INPUT_HANDLER(verifyRiddle);
+    CLEAR_SCREEN();
     switch (input) {
       case 1:
         room.presentRiddle();
         break;
       case 2:
         System.out.println("Come back when you are ready");
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        CLEAR_SCREEN();
         break;
       default:
         break;

@@ -171,7 +171,6 @@ public class InventoryPuzzle {
                     break;
                 }
             }
-            CLEAR_SCREEN();
         }
     }
 }
