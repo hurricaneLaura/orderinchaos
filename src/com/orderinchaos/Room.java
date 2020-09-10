@@ -43,7 +43,6 @@ public class Room {
     for (String line : lines) {
       this.description.add(line.trim().concat("."));
     }
-
   }
 
   private void setObstacle(Riddle riddle) {

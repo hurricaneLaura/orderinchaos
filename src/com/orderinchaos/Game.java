@@ -1,6 +1,8 @@
 package com.orderinchaos;
 
+
 import java.util.*;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.orderinchaos.Util.*;
@@ -9,8 +11,6 @@ public class Game {
   private Room currentRoom;
   private List<Room> roomList = new ArrayList<>();
   private Player player = new Player("The Chosen One");
-
-  // Load roomList
 
   public void runGame() {
     LOAD_SCREEN();
@@ -50,7 +50,7 @@ public class Game {
   private void intro() {
     PRINT_TEXT_FILE("intro.txt", 300);
     Scanner wait = new Scanner(System.in);
-    System.out.print("Press ENTER to continue...");
+    Util.green("Press ENTER to continue...");
     String userInput = wait.nextLine();
   }
 
@@ -63,7 +63,7 @@ public class Game {
   private void loadHowToPlay() {
     PRINT_TEXT_FILE("instruction.txt", 0);
     Scanner wait = new Scanner(System.in);
-    System.out.print("Press ENTER to go back...");
+    Util.green("Press ENTER to go back...");
     String userInput = wait.nextLine();
     CLEAR_SCREEN();
   }
@@ -71,7 +71,7 @@ public class Game {
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
       STREAM_DISPLAY(room.getDescription().stream(), 0);
-      room.presentRiddle();
+      randomize(room);
       if ("Western Mountains".equals(room.getName())) {
         InventoryPuzzle puzzle = new InventoryPuzzle();
         puzzle.resetPuzzle();
@@ -109,19 +109,18 @@ public class Game {
     for (Room room : roomList) {
       Inventory roomInv = room.getInventory();
       roomInv.addItem(new Item.Builder("SCROLL")
-              .withDescription("This look very important")
-              .withReadText("After his invitation to Heaven, the Monkey King believed that he was receiving an honorable place amongst the gods.\nHowever, upon his arrival, he was told that he would become ‘Protector of the Horses’: a lowly stable boy.")
-              .withIsKey(true)
-              .withCanRead(true)
-              .build()
+        .withDescription("This look very important")
+        .withReadText("After his invitation to Heaven, the Monkey King believed that he was receiving an honorable place amongst the gods.\nHowever, upon his arrival, he was told that he would become ‘Protector of the Horses’: a lowly stable boy.")
+        .withIsKey(true)
+        .withCanRead(true)
+        .build()
       );
     }
   }
 
-  public List<Room> getRoomList(){
+  public List<Room> getRoomList() {
     return Collections.unmodifiableList(roomList);
   }
-
 
 
   // TODO: validate user input
@@ -174,6 +173,29 @@ public class Game {
     riddles.add(riddle);
     Collections.shuffle(riddles);
   }
+
+  private void randomize(Room room) {
+    double rand = Math.random();
+    if (rand < 0.5) {
+      verifyRiddle(room);
+    }
+  }
+
+  private void verifyRiddle(Room room) {
+    String[] verifyRiddle = {"yes", "no"};
+    System.out.println("do you want to attempt this Riddle?");
+    int input = Util.INPUT_HANDLER(verifyRiddle);
+    switch (input) {
+      case 1:
+        room.presentRiddle();
+        break;
+      case 2:
+        System.out.println("Come back when you are ready");
+        break;
+      default:
+        break;
+        }
+    }
 }
 
 

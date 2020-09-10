@@ -26,8 +26,8 @@ public class ActionUtil {
     public static void check(String input, Room room, Player player) {
         // print current location and current inventory
         if ("STATUS".equals(input)) {
-            System.out.println(room.getName());
-            System.out.println(player.getInventory().toString());
+            Util.blue(room.getName());
+            Util.red(player.getInventory().toString());
         }
     }
     public static void look(String input, Room room, Player player) {
