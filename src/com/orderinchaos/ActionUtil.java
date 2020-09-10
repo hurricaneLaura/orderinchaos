@@ -1,6 +1,9 @@
 package com.orderinchaos;
 
+import java.util.Date;
+
 import static com.orderinchaos.Util.PRINT_TEXT_FILE;
+import static com.orderinchaos.Util.SAVE_GAME;
 
 public class ActionUtil {
 
@@ -16,6 +19,9 @@ public class ActionUtil {
                 break;
             case "CHECK":
                 check(userInput[1],room, player);
+                break;
+            case "SAVE":
+                saveGame(userInput[1], room, player);
                 break;
             default:
                 break;
@@ -89,6 +95,30 @@ public class ActionUtil {
         } else {
             return false;
         }
+    }
+
+    public static StringBuffer saveGame(String game, Room room, Player player) {
+        StringBuffer currentGame = new StringBuffer(new Date().toString());
+        if (game.toUpperCase().equals("GAME")) {
+            String delimiter = "|";
+            currentGame.append(delimiter.concat(player.getName()));
+            if (player.getInventory().getItems().size() > 0) {
+                currentGame.append(delimiter.concat(player.getInventory().getItems().toString()));
+            } else {
+                currentGame.append(delimiter);
+            }
+            currentGame.append(delimiter.concat(room.getName()));
+            if (room.getInventory().getItems().size() > 0) {
+                currentGame.append(delimiter.concat(room.getInventory().getItems().toString()));
+            } else {
+                currentGame.append(delimiter);
+            }
+            SAVE_GAME(currentGame);
+        } else {
+            System.out.println("I'm not sure how to save " + game.toUpperCase());
+        }
+        // return StringBuffer for test purposes
+        return currentGame;
     }
 
     // Requisite Puzzle Methods

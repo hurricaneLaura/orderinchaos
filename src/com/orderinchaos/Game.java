@@ -1,14 +1,11 @@
 package com.orderinchaos;
 
-
 import java.util.*;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static com.orderinchaos.Util.*;
 
 public class Game {
-  private Room currentRoom;
   private List<Room> roomList = new ArrayList<>();
   private Player player = new Player("The Chosen One");
 
@@ -20,6 +17,7 @@ public class Game {
 
   private void mainMenu() {
     // DONE: load start screen (new game, load game, how to play)
+    CLEAR_SCREEN();
     Util.PRINT_TEXT_FILE("banner.txt", 300);
     String[] prompt = {"New Game", "Load Game", "How to Play"};
     int userInput = INPUT_HANDLER(prompt);
@@ -33,8 +31,8 @@ public class Game {
         break;
       case 3:
         loadHowToPlay();
+        mainMenu();
         break;
-      // TODO: Asking user input again, possible infinite loop/handled at higher level
       default:
         runGame();
         break;
@@ -42,6 +40,7 @@ public class Game {
   }
 
   private void newGame() {
+    CLEAR_SCREEN();
     intro();
     loadRooms();
     roomEvents(player, roomList);
@@ -52,11 +51,27 @@ public class Game {
     Scanner wait = new Scanner(System.in);
     Util.green("Press ENTER to continue...");
     String userInput = wait.nextLine();
+    CLEAR_SCREEN();
   }
 
   // TODO: implement load game feature
+
+
   private void loadGame() {
-    System.out.println("Loading...");
+    LOAD_SCREEN();
+    // TODO: need to refactor this part to display saved list
+    Stream<String> games = TEXT_READER("/save/game.txt");
+    List<String> savedGames = new ArrayList<>();
+    games.forEach(game -> savedGames.add(game));
+    String gameSelected = savedGames.get(0);
+
+    // loadGame
+    String[] gameInfo = gameSelected.split("[|]");
+    System.out.println("Game saved on " + gameInfo[0] + " successfully loaded" + "\n");
+    System.out.println("Welcome back, " + gameInfo[1]);
+    Player player = new Player(gameInfo[1]);
+    loadRooms();
+    roomEvents(player, roomList);
   }
 
   // TODO: display how to play guide
@@ -70,6 +85,7 @@ public class Game {
 
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
+      CLEAR_SCREEN();
       STREAM_DISPLAY(room.getDescription().stream(), 0);
       randomize(room);
       if ("Western Mountains".equals(room.getName())) {
@@ -87,16 +103,17 @@ public class Game {
   public Player changePhase(Room room, Player player) {
     while (room.isCleared() != true) {
       // TODO: look into putting these commands into a text file, their own class, or a higher scope
-      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
+      List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK", "SAVE");
       String[] userInput = INPUT_HANDLER(validInput);
       // TODO: print user input iot confirm : Do we want to display native vs synonym cmd
-      System.out.println((userInput[0] + " " + userInput[1]).toUpperCase());
+      String input = userInput[2];
+      System.out.println((input + " " + userInput[1]).toUpperCase());
       ActionUtil.actionDelegator(userInput, room, player);
       room.setCleared();
     }
     return player;
   }
-
+  // TODO: modify to take one arg, fileName
   public void loadRooms() {
 
     Stream<String> descriptions = Util.TEXT_READER("room_descriptions.txt");
@@ -121,7 +138,6 @@ public class Game {
   public List<Room> getRoomList() {
     return Collections.unmodifiableList(roomList);
   }
-
 
   // TODO: validate user input
   public void end(boolean didWin) {
@@ -197,9 +213,6 @@ public class Game {
         }
     }
 }
-
-
-
 
   // present user with a start screen
   // they start a new game
