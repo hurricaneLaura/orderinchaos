@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -51,7 +52,7 @@ public class Util {
   }
 
   public static String[] INPUT_HANDLER(List<String> validCommands, String file) {
-    String[] userInput = new String[2];
+    String[] userInput = new String[3];
     // TODO: send to call API upon start
     boolean isValidInput = false;
     while (!isValidInput) {
@@ -82,10 +83,13 @@ public class Util {
           isValidInput = true;
           userInput[0] = synonym;
           userInput[1] = noun;
+          userInput[2] = verb;
           CLEAR_SCREEN();
         } else {
-          System.out.println("I'm not sure what " + input + " means...");
+          throw new InvalidInputException(input);
         }
+      } catch (InvalidInputException e) {
+        e.printStackTrace();
       } catch (IndexOutOfBoundsException e) {
         // TODO: display suggestion
         System.out.println("Invalid input.");
@@ -159,6 +163,26 @@ public class Util {
     return result;
   }
 
+  public static void SAVE_GAME(StringBuffer saveFile) {
+    String fileName = "docs/save/game.txt";
+    try {
+      File save = new File(fileName);
+      if (!save.exists()) {
+        save.createNewFile();
+      }
+      FileWriter createSave = new FileWriter(fileName);
+      try {
+        createSave.write(saveFile.toString());
+        createSave.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Game Successfully Saved");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   private static String GET_KEY(String fileName) {
     List<String> keys = new ArrayList<>();
     TEXT_READER(fileName).forEach(line -> keys.add(line));
@@ -193,12 +217,12 @@ public class Util {
         System.out.print("\r  |██████████████████████████████████████████████████████  -  -  |  85 %");
         Thread.sleep(150);
         System.out.print("\r  |██████████████████████████████████████████████████████████████|  100%");
-        Thread.sleep(75);
+        Thread.sleep(175);
+        System.out.print("\r");
       }
       catch(Exception e) {
         System.err.println(e);
       }
-    System.out.println("\r              ");
   }
 
   public static void CLEAR_SCREEN() {

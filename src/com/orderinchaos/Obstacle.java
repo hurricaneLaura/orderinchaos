@@ -2,6 +2,9 @@ package com.orderinchaos;
 
 import java.util.Scanner;
 
+import static com.orderinchaos.Util.CLEAR_SCREEN;
+import static com.orderinchaos.Util.LOAD_SCREEN;
+
 public class Obstacle {
   // FIELDS/ ATTRIBUTES
   private boolean pass;
@@ -61,5 +64,7 @@ public class Obstacle {
   // TODO: give user a reward
   public void success() {
     System.out.println("very cool treasure added to inventory");
+    LOAD_SCREEN();
+    CLEAR_SCREEN();
   }
 }

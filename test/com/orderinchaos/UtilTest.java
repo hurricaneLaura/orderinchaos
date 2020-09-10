@@ -25,10 +25,9 @@ public class UtilTest {
     assertEquals(expectedOutput, res[0]);
   }
 
-  @Test (expected = IndexOutOfBoundsException.class)
-  public void INPUT_HANDLER_ShouldThrowIOBExceptionIfSynonymsAreNOTProvided() {
+  @Test (expected = InvalidInputException.class)
+  public void INPUT_HANDLER_ShouldThrowInvalidInputExceptionIfSynonymsAreNOTProvided() {
     // Provided "kick item"
     String[] res = INPUT_HANDLER(validCommands, "failTest.txt");
-//    assertNull(res);
   }
 }
