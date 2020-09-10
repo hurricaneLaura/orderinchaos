@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-  // FIELDS AKA ATTRIBUTES
+  // FIELDS
   private String name;
   private Inventory inventory = new Inventory();
 
@@ -14,7 +14,7 @@ public class Player {
     setName(name);
   }
 
-  // GETTERS/ SETTERS
+  // GETTERS/SETTERS
   public String getName() {
     return name;
   }
@@ -27,18 +27,6 @@ public class Player {
   }
 
   // BUSINESS METHODS
-
-  // READ ITEMS IN ROOM
-  public void read() {
-//    if (readItems != null) {
-
-
-    // null check readItem list
-    // according to user input print
-    // print text
-    // }
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
