@@ -34,7 +34,6 @@ public class InventoryPuzzle {
         // Three rounds of puzzle, player gets less time to complete the task each round
         randomizeSolutionsList();
         for (int i=3; i>0; i--) {
-            // TODO: generate a random item to initialize puzzlethread
             // Reassign solution in each loop
             solution = solutions.get(i-1);
             // Make a new thread with the new solution for prompting player with hint
@@ -50,12 +49,18 @@ public class InventoryPuzzle {
             CLEAR_SCREEN();
             puzzleThreadRunner.start();
             actionPhase(puzzleThreadRunner);
-            resetPuzzle();
-            System.out.println();
-            System.out.println("The Requisites KNAPSACK has returned to it's place.");
+            if (getRoundCleared() == false) {
+                System.out.println("You have FAILED to master the Requisites...");
+                // TODO: pass the fail up to game class
+                break;
+            } else if (getRoundCleared() == true && i == 1) {
+                System.out.println("You Have Mastered All The REQUISITES");
+            } else {
+                resetPuzzle();
+                System.out.println();
+                System.out.println("The Requisites KNAPSACK has returned to it's place.");
+            }
         }
-        System.out.println("You Have Mastered All The REQUISITES");
-        // Player action;
     }
 
     public void randomizeSolutionsList() {
@@ -158,21 +163,11 @@ public class InventoryPuzzle {
 //                System.out.println();
                 try {
                     if (i > 2) {
-                        System.out.println("\n"+(i*15) + countdownMessage);
+                        System.out.println("\n" + (i * 15) + countdownMessage);
                     } else if (i > 0) {
                         System.out.println("\n" + countdownWarning);
-                    } else {
-                        //TODO: implement a loss condition
                     }
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //
-
-                    Thread.sleep(15);
+                    Thread.sleep(1500);
                 }
                 catch (InterruptedException e) {
                     // Intentionally not logging error because console game
