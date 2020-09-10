@@ -12,6 +12,7 @@ public class InventoryPuzzle {
         puzzle.runRoom();
     }
     private boolean isCleared = false;
+    private boolean roundCleared = false;
     private String[] userInput = {"",""};
     private Room puzzleRoom = new Room("Chamber of Requisites", "");
     private Player puzzlePlayer = new Player("Puzzle Monk");
@@ -45,10 +46,10 @@ public class InventoryPuzzle {
             Scanner wait = new Scanner(System.in);
             System.out.println("You have chosen a monk's life, thus you must honor these Requisites.");
             System.out.print("Center yourself, then press ENTER to continue...");
-            String userInput = wait.nextLine();
+            wait.nextLine();
             CLEAR_SCREEN();
             puzzleThreadRunner.start();
-            playerLoop(puzzleThreadRunner);
+            actionPhase(puzzleThreadRunner);
             resetPuzzle();
             System.out.println();
             System.out.println("The Requisites KNAPSACK has returned to it's place.");
@@ -82,6 +83,13 @@ public class InventoryPuzzle {
         this.isCleared = bool;
     }
 
+    public boolean getRoundCleared() {
+        return roundCleared;
+    }
+    public void setRoundCleared(boolean bool) {
+        this.roundCleared = bool;
+    }
+
     private void activateCountdown() {
         while ( puzzlePlayer.getInventory().getItem("KNAPSACK") == null) {
             List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
@@ -98,10 +106,12 @@ public class InventoryPuzzle {
         System.out.println("MEDICINE attainable!");
         System.out.println();
     }
-    private void playerLoop(PuzzleThread puzzleThread) {
+    private void actionPhase(PuzzleThread puzzleThread) {
+        setRoundCleared(false);
         List<String> puzzleValidInput = Arrays.asList("WARD", "NOSH", "REMEDY", "TAKE","DROP", "CHECK");
         List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
-        while ( getCleared() != true) {
+        while ( puzzleThread.isAlive() && getRoundCleared() != true ) {
+            System.out.println(puzzleThread.isAlive());
             // If player has an item, do item stuff, otherwise do normal stuff
             String[] userInput = {"",""};
             if (puzzlePlayer.getInventory().getItems().size() > 1) {
@@ -113,7 +123,7 @@ public class InventoryPuzzle {
                 ActionUtil.actionDelegator(userInput, puzzleRoom, puzzlePlayer);
             }
         }
-        setCleared(false);
+
     }
 
     private void checkSolution(String[] userInput, PuzzleThread puzzleThread) {
@@ -122,10 +132,11 @@ public class InventoryPuzzle {
         if (userInput[0].equals(solution[0]) && userInput[1].equals(solution[1])) {
 //            System.out.println(userInput);
 //            System.out.println(solution);
-            setCleared(true);
+            setRoundCleared(true);
             System.out.println("----" + solution[1] + ": you have Mastered this Requisite!----");
             puzzleThread.interrupt();
-
+        } else {
+            System.out.println("...you still have not Mastered this Requisite.");
         }
     }
 
@@ -133,8 +144,8 @@ public class InventoryPuzzle {
         private int numRounds = 5;
         private String[] solution;
         private String taskHint;
-        private String countdownWarning = "Dusk is less than a Vighati away!!!";
-        private String countdownMessage = " Lipta remaining. Darkness will come soon...";
+        private String countdownWarning = "Dusk is less than one Vighati away!!!";
+        private String countdownMessage = " seconds remain. Darkness will come soon...";
 
         public PuzzleThread(int numRounds, String[] solutionSet) {
             this.numRounds = numRounds;
@@ -143,15 +154,25 @@ public class InventoryPuzzle {
         @Override
         public void run() {
             System.out.println(taskHint);
-            for (int i = numRounds; i > 0; i--) {
+            for (int i = numRounds + 1; i >= 0; i--) {
 //                System.out.println();
                 try {
-                    Thread.sleep(15000);
-                    if (i < 3) {
+                    if (i > 2) {
+                        System.out.println("\n"+(i*15) + countdownMessage);
+                    } else if (i > 0) {
                         System.out.println("\n" + countdownWarning);
                     } else {
-                        System.out.println("\n"+(4 * i * 2) + countdownMessage);
+                        //TODO: implement a loss condition
                     }
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+
+                    Thread.sleep(15);
                 }
                 catch (InterruptedException e) {
                     // Intentionally not logging error because console game
@@ -161,56 +182,4 @@ public class InventoryPuzzle {
             CLEAR_SCREEN();
         }
     }
-
-
-
-    // The puzzle is reset with new inventories and three items
-
-    // Player interacts with something that kicks off a puzzle
-
-    // The puzzle then kicks off a thread
-       // THREAD
-         /*
-            Receives a random task (random task has a test and an evaluation method
-            displays the task
-            starts a timer
-            evaluates if the condition is met
-          */
-        // The thread displays a task
-        // That thread will start a timer
-        // At the end of the timer it will check to see if the condition was met
-
-        // While the thread is running, the player must go complete the task that was assigned
-            /*
-                 Player must go pickup the item that corresponds to the hint
-                 Player can only hold one item at a time
-                 Player can then cast the command that corresponds to the item
-             */
-    // Three things can happen and the player must go get the correct item to ward off each thing
-    // What will the player interact with?
-    // The player can only hold one item at a time
-    // The player takes by interacting with a statue
-    // TWhen the player drops an item, it is returned to the puzzle inventory
-    // If the player is holding an item when the timer is up, he wins
-
-
-
-
-
-
-    //List<String> validInput = Arrays.asList("WARD", "NOSH", "REMEDY", "DROP", "CHECK");
-
-    //INPUT_HANDLER(LIST
-
-//    puzzleInventory.addItem(PuzzleItems.robes())
-
-
-    // Create a puzzle that uses inventory as its main schtick
-
-    // Start with a puzzle inventory and a player inventory
-    // Use a text handler with a special list of valid commands
-
-    // robes - WARD: I use it simply to ward off cold, to ward off heat, to ward off the touch of flies, mosquitoes, simply for the purpose of covering
-    //almsfood - NOSH: I use it not playfully, but simply for the survival and continuance of this body and for ending its afflictions. Thus I will maintain myself, be blameless, and live in comfort.
-    //medicinal requisites for curing the sick - REMEDY: I use them simply to remedy pains or remedy illnesses that have arisen and for the maximum freedom from disease.
 }

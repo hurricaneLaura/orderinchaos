@@ -73,8 +73,10 @@ public class Game {
       STREAM_DISPLAY(room.getDescription().stream(), 0);
       room.presentRiddle();
       changePhase(room, player);
+      if (roomList.indexOf(room) == (roomList.size() - 1)){
+        end(true);
+      }
     }
-    end();
   }
 
   public Player changePhase(Room room, Player player) {
@@ -118,9 +120,13 @@ public class Game {
 
 
   // TODO: validate user input
-  public void end() {
+  public void end(boolean didWin) {
     String[] playAgain = {"play again", "quit"};
-    System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
+    if (didWin) {
+      System.out.println("Success! you have rescued the monkey king. With the scrolls you both can go forth and conquer the demons - bringing peace to the world once again." + "\n" + "**Based on a true story**");
+    } else {
+      System.out.println("You have failed us all...");
+    }
     System.out.println("\n" + "What would you like to do?");
     int userInput = INPUT_HANDLER(playAgain);
     switch (userInput) {

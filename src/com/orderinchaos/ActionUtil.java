@@ -112,21 +112,21 @@ public class ActionUtil {
     }
 
     public static void ward(String userInput, Room room, Player player) {
-        if (player.getInventory().getItem(userInput) != null) {
+        if (player.getInventory().getItem("ROBES") != null) {
             System.out.println("The " + userInput + " shield you from exposure!");
         } else {
             displayImpossibleAction();
         }
     }
     public static void nosh(String userInput, Room room, Player player) {
-        if (player.getInventory().getItem(userInput) != null) {
+        if (player.getInventory().getItem("ALMS") != null) {
             System.out.println("The " + userInput + " restores your energy!");
         } else {
             displayImpossibleAction();
         }
     }
     public static void remedy(String userInput, Room room, Player player) {
-        if (player.getInventory().getItem(userInput) != null) {
+        if (player.getInventory().getItem("MEDICINE") != null) {
             System.out.println("The " + userInput + " cures your ailments!");
         } else {
             displayImpossibleAction();
