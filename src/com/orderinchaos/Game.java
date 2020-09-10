@@ -1,9 +1,6 @@
 package com.orderinchaos;
 
-import java.awt.*;
-import java.awt.Color;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static com.orderinchaos.Util.*;
@@ -84,8 +81,17 @@ public class Game {
 
   private void loadGame() {
     LOAD_SCREEN();
-    Stream<String> game = TEXT_READER("/save/game.txt");
-    game.forEach(System.out::println);
+    // TODO: need to refactor this part to display saved list
+    Stream<String> games = TEXT_READER("/save/game.txt");
+    List<String> savedGames = new ArrayList<>();
+    games.forEach(game -> savedGames.add(game));
+    String gameSelected = savedGames.get(0);
+
+    // loadGame
+    String[] gameInfo = gameSelected.split("[|]");
+    System.out.println("Game saved on " + gameInfo[0] + " successfully loaded");
+    System.out.println("Welcome back, " + gameInfo[1]);
+
   }
 
   // TODO: display how to play guide

@@ -1,7 +1,5 @@
 package com.orderinchaos;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -14,6 +12,11 @@ public class Player {
     setName(name);
   }
 
+  public Player(String name, Inventory inventory) {
+    this(name);
+    setInventory(inventory);
+  }
+
   // GETTERS/SETTERS
   public String getName() {
     return name;
@@ -24,6 +27,10 @@ public class Player {
   }
   public Inventory getInventory(){
     return inventory;
+  }
+
+  private void setInventory(Inventory inventory) {
+    this.inventory = inventory;
   }
 
   // BUSINESS METHODS
