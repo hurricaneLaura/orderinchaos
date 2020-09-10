@@ -67,9 +67,11 @@ public class Game {
 
     // loadGame
     String[] gameInfo = gameSelected.split("[|]");
-    System.out.println("Game saved on " + gameInfo[0] + " successfully loaded");
+    System.out.println("Game saved on " + gameInfo[0] + " successfully loaded" + "\n");
     System.out.println("Welcome back, " + gameInfo[1]);
-
+    Player player = new Player(gameInfo[1]);
+    loadRooms();
+    roomEvents(player, roomList);
   }
 
   // TODO: display how to play guide
@@ -83,6 +85,7 @@ public class Game {
 
   public void roomEvents(Player player, List<Room> roomList) {
     for (Room room : roomList) {
+      CLEAR_SCREEN();
       STREAM_DISPLAY(room.getDescription().stream(), 0);
       randomize(room);
       if ("Western Mountains".equals(room.getName())) {

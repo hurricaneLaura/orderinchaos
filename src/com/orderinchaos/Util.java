@@ -4,8 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.awt.*;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -18,7 +16,6 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.CompletionException;
 import java.util.stream.Stream;
 
@@ -118,7 +115,6 @@ public class Util {
           userInput[0] = synonym;
           userInput[1] = noun;
           userInput[2] = verb;
-          CLEAR_SCREEN();
         } else {
           throw new InvalidInputException(input);
         }

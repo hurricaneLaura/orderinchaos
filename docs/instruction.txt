@@ -17,6 +17,9 @@ There may be opportunities to acquire items that will aid with obstacles. The ta
 [DROP XXX]
 User will use DROP command to discard item(s).
 
+[SAVE GAME]
+User will use SAVE command to save the current game.
+
 	      SCROLLS  |  ROOMS
 ----------------   |  ------------------
 Scroll of Creation | Monastery
