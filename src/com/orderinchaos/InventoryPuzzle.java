@@ -14,12 +14,12 @@ public class InventoryPuzzle {
     private boolean isCleared = false;
     private boolean roundCleared = false;
     private String[] userInput = {"",""};
-    private Room puzzleRoom = new Room("Chamber of Requisites", "");
+    private Room puzzleRoom = new Room("Chamber of Requisites", "Requisites are sacred, young monk -- Take this time to learn how to use these items properly: [ROBES,ALMS,MEDICINE]");
     private Player puzzlePlayer = new Player("Puzzle Monk");
     private List<String[]> solutions = new ArrayList<>();
     private String[] solution = {"NOSH","ALMS"};
 
-    private void resetPuzzle() {
+    public void resetPuzzle() {
         puzzleRoom.setIsPuzzle(true);
         puzzlePlayer.getInventory().clearItems();
         Inventory puzzleInventory = puzzleRoom.getInventory();
@@ -30,9 +30,11 @@ public class InventoryPuzzle {
         puzzleInventory.addItem(PuzzleItems.knapsack());
     }
 
-    private void runRoom() {
+    public void runRoom() {
         // Three rounds of puzzle, player gets less time to complete the task each round
         randomizeSolutionsList();
+        System.out.println("You have entered the " + puzzleRoom.getName());
+        System.out.println(puzzleRoom.getDescription());
         for (int i=3; i>0; i--) {
             // Reassign solution in each loop
             solution = solutions.get(i-1);
@@ -52,9 +54,11 @@ public class InventoryPuzzle {
             if (getRoundCleared() == false) {
                 System.out.println("You have FAILED to master the Requisites...");
                 // TODO: pass the fail up to game class
+                setCleared(false);
                 break;
             } else if (getRoundCleared() == true && i == 1) {
                 System.out.println("You Have Mastered All The REQUISITES");
+                setCleared(true);
             } else {
                 resetPuzzle();
                 System.out.println();
@@ -116,7 +120,6 @@ public class InventoryPuzzle {
         List<String> puzzleValidInput = Arrays.asList("WARD", "NOSH", "REMEDY", "TAKE","DROP", "CHECK");
         List<String> validInput = Arrays.asList("LOOK", "READ", "TAKE", "DROP", "CHECK");
         while ( puzzleThread.isAlive() && getRoundCleared() != true ) {
-            System.out.println(puzzleThread.isAlive());
             // If player has an item, do item stuff, otherwise do normal stuff
             String[] userInput = {"",""};
             if (puzzlePlayer.getInventory().getItems().size() > 1) {
@@ -132,11 +135,7 @@ public class InventoryPuzzle {
     }
 
     private void checkSolution(String[] userInput, PuzzleThread puzzleThread) {
-//        System.out.println(userInput.toString());
-//        System.out.println(solution.toString());
         if (userInput[0].equals(solution[0]) && userInput[1].equals(solution[1])) {
-//            System.out.println(userInput);
-//            System.out.println(solution);
             setRoundCleared(true);
             System.out.println("----" + solution[1] + ": you have Mastered this Requisite!----");
             puzzleThread.interrupt();
@@ -147,9 +146,8 @@ public class InventoryPuzzle {
 
     class PuzzleThread extends Thread {
         private int numRounds = 5;
-        private String[] solution;
         private String taskHint;
-        private String countdownWarning = "Dusk is less than one Vighati away!!!";
+        private String countdownWarning = "Dusk is less than 10 seconds away!!!";
         private String countdownMessage = " seconds remain. Darkness will come soon...";
 
         public PuzzleThread(int numRounds, String[] solutionSet) {
@@ -160,14 +158,13 @@ public class InventoryPuzzle {
         public void run() {
             System.out.println(taskHint);
             for (int i = numRounds + 1; i >= 0; i--) {
-//                System.out.println();
                 try {
-                    if (i > 2) {
+                    if (i > 0) {
                         System.out.println("\n" + (i * 15) + countdownMessage);
-                    } else if (i > 0) {
+                    } else  {
                         System.out.println("\n" + countdownWarning);
                     }
-                    Thread.sleep(1500);
+                    Thread.sleep(15000);
                 }
                 catch (InterruptedException e) {
                     // Intentionally not logging error because console game

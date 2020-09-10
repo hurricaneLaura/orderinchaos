@@ -72,6 +72,11 @@ public class Game {
     for (Room room : roomList) {
       STREAM_DISPLAY(room.getDescription().stream(), 0);
       room.presentRiddle();
+      if ("Western Mountains".equals(room.getName())) {
+        InventoryPuzzle puzzle = new InventoryPuzzle();
+        puzzle.resetPuzzle();
+        puzzle.runRoom();
+      }
       changePhase(room, player);
       if (roomList.indexOf(room) == (roomList.size() - 1)){
         end(true);
